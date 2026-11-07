@@ -1,0 +1,12 @@
+[
+ {"tag": "hook", "mood": "calm", "hi": "गोवर्धन पूजा पर, एक पहाड़ की पूजा क्यों होती है?", "en": "Govardhan Puja pe ek pahaad ki pooja kyun hoti hai?", "kw": "pahaad"},
+ {"tag": "indra", "mood": "calm", "hi": "हर साल ब्रज के लोग, बारिश के देवता इंद्र की पूजा करते थे।", "en": "Har saal Braj ke log baarish ke devta Indra ki pooja karte the.", "kw": "Indra"},
+ {"tag": "krishna", "mood": "bright", "hi": "पर नन्हे कृष्ण ने कहा, हमारी गायों को चारा और हमें पानी, गोवर्धन पर्वत देता है। पूजा उसकी करो।", "en": "Par nanhe Krishna ne kaha: gaayon ko chaara, humein paani, Govardhan deta hai. Pooja uski karo.", "kw": "Govardhan"},
+ {"tag": "storm", "mood": "tense", "hi": "इंद्र को ग़ुस्सा आ गया। उसने ब्रज पर भयंकर तूफ़ान भेज दिया।", "en": "Indra ko gussa aa gaya. Usne Braj par bhayankar toofan bhej diya.", "kw": "toofan"},
+ {"tag": "lift", "mood": "tense", "hi": "तब कृष्ण ने, अपनी छोटी उंगली पर, पूरा गोवर्धन पर्वत उठा लिया।", "en": "Tab Krishna ne apni chhoti ungli par poora Govardhan parvat utha liya.", "kw": "chhoti ungli"},
+ {"tag": "shelter", "mood": "calm", "hi": "सारे ग्वाले, गायें और बच्चे, सब उसके नीचे आ गए।", "en": "Saare gwale, gaayein aur bachche, sab uske neeche aa gaye.", "kw": "neeche"},
+ {"tag": "days", "mood": "tense", "hi": "सात दिन, सात रात, बारिश होती रही। पर कृष्ण की उंगली नहीं हिली।", "en": "Saat din, saat raat baarish hoti rahi. Par Krishna ki ungli nahi hili.", "kw": "Saat din"},
+ {"tag": "end", "mood": "bright", "hi": "आख़िर इंद्र का घमंड टूटा, और बारिश रुक गई।", "en": "Aakhir Indra ka ghamand toota, aur baarish ruk gayi.", "kw": "ghamand toota"},
+ {"tag": "annakut", "mood": "bright", "hi": "तब लोगों ने पकवानों का पहाड़ बनाकर, गोवर्धन को धन्यवाद दिया। यही है अन्नकूट।", "en": "Tab logon ne pakwaanon ka pahaad banakar Govardhan ko dhanyavaad diya. Yahi hai Annakoot.", "kw": "Annakoot"},
+ {"tag": "cta", "mood": "bright", "hi": "ये कहानी उन्हें भेजो, जो पूछते हैं, पहाड़ की पूजा क्यों?", "en": "Ye kahani unhe bhejo jo poochte hain: pahaad ki pooja kyun?", "kw": "bhejo"}
+]
