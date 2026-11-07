@@ -31,3 +31,18 @@ Set `KOKORO_DIR` if the model files live elsewhere.
 ## Rules baked in
 Safe zone x 65–1015, y 269–1248; right rail x > 930 in y 900–1700 stays clear; captions in y 1060–1230.
 One mid-reel nudge (~40%, 1.6 s) and one end ask after the value; loop line flows back into the hook.
+
+## Natural Indian voice (Indic Parler-TTS) — preferred for Hindi / Hinglish / Indian English (7 Nov 2026)
+Use `voice="parler:<Speaker>:<mood>"` in any `Line` (e.g. `parler:Rohit:calm`, `parler:Rohit:tense`, `parler:Divya:bright`, `parler:Rohit:news`).
+Setup (one time per machine, ~10 min):
+```
+pip install --break-system-packages torch                      # from PyPI (download.pytorch.org may be blocked)
+pip install --break-system-packages "git+https://github.com/huggingface/parler-tts.git" "protobuf>=5.26"
+```
+The model (3.7 GB) downloads on first use from the Apache-2.0 mirror `RXD03/indic-parler-tts` (official `ai4bharat/indic-parler-tts` needs a HF login; set PARLER_REPO to switch).
+Speed: ~10x real time on 2 CPUs (a 45 s reel = ~8 min of voice). Approved narrator: **Rohit** (Govardhan story, 7 Nov).
+
+## HyperFrames (HeyGen) renderer — for vector storybook / mythology / explainer scenes
+`engine/hyperframes/govardhan/` is the approved template (HTML + SVG + GSAP, timed to the narration).
+Run: `npx -y hyperframes@0.9.20 render <dir> -o out.mp4 -q looks -w 2` with `HYPERFRAMES_BROWSER_PATH=/usr/bin/google-chrome`.
+Load GSAP and fonts from local files (CDNs are blocked here). Then mix voice + music with `Reel.mix()` and mux (see build.py).

@@ -40,8 +40,46 @@ def polish(a, pitch=0.0, tone="warm"):
         b, _ = sf.read(f"{d}/o.wav", dtype="float32")
     return b
 
+# ---------------- natural Indian voices: AI4Bharat Indic Parler-TTS ----------------
+# voice="parler:<Speaker>:<mood>"  e.g. "parler:Rohit:calm", "parler:Divya:bright". Works for Hindi, Hinglish and Indian English.
+# Slow on CPU (~10x real time) but far more natural than Kokoro. Needs torch + parler-tts (see README).
+PARLER_REPO = os.environ.get("PARLER_REPO", "RXD03/indic-parler-tts")   # Apache-2.0 mirror of ai4bharat/indic-parler-tts
+PARLER_MOODS = {
+    "calm": "{s} speaks in a warm, expressive storytelling voice at a moderate pace, with clear audio and very little background noise.",
+    "tense": "{s} speaks in a deep, dramatic and intense storytelling voice at a moderate pace, with clear audio and very little background noise.",
+    "bright": "{s} speaks in a warm, joyful and expressive storytelling voice at a moderate pace, with clear audio and very little background noise.",
+    "news": "{s} speaks in a clear, confident and energetic news presenter voice at a slightly fast pace, with very clear audio and no background noise.",
+}
+_P = {}
+def _parler():
+    if not _P:
+        import torch
+        from transformers import AutoTokenizer
+        from parler_tts import ParlerTTSForConditionalGeneration
+        torch.set_num_threads(max(1, os.cpu_count() or 2))
+        m = ParlerTTSForConditionalGeneration.from_pretrained(PARLER_REPO)
+        _P.update(m=m, tok=AutoTokenizer.from_pretrained(PARLER_REPO), dtok=AutoTokenizer.from_pretrained(m.config.text_encoder._name_or_path), torch=torch)
+    return _P
+
+def say_parler(text, speaker="Rohit", mood="calm", seed=7):
+    P = _parler(); torch = P["torch"]; torch.manual_seed(seed)
+    ids = P["dtok"](PARLER_MOODS.get(mood, mood).format(s=speaker), return_tensors="pt"); pids = P["tok"](text.replace("|", ","), return_tensors="pt")
+    with torch.no_grad():
+        a = P["m"].generate(input_ids=ids.input_ids, attention_mask=ids.attention_mask,
+                            prompt_input_ids=pids.input_ids, prompt_attention_mask=pids.attention_mask).cpu().numpy().squeeze().astype(np.float32)
+    sr = P["m"].config.sampling_rate
+    if sr != SR:
+        import librosa; a = librosa.resample(a, orig_sr=sr, target_sr=SR).astype(np.float32)
+    return trim(a, 0.01)
+
 def say(text, voice, speed=1.0, lang="en-us", pitch=0.0, tone="warm"):
     """One line. Long lines are split into short phrases (6-10 words) joined with comma pauses for a smoother read."""
+    if voice.startswith("parler:"):
+        _, spk, mood = (voice.split(":") + ["calm"])[:3]
+        a = say_parler(en_spoken(text) if lang.startswith("en") else text, spk, mood)
+        if abs(speed - 1.0) > .01:
+            import librosa; a = librosa.effects.time_stretch(a, rate=speed).astype(np.float32)
+        return polish(a, pitch, tone)
     spoken = en_spoken(text) if lang.startswith("en") else text
     # "|" = short breath (0.16 s) inside a sentence; sentence ends get 0.32 s
     parts = [p.strip() for p in re.split(r"(?<=[.!?…।|])\s+", spoken) if p.strip()]
