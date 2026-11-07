@@ -61,9 +61,9 @@ class Sparks:
             k = 1 - age / life; L = .03
             d.line((x, y, x - vx * L, y - vy * L), fill=(255, int(200 + 55 * k), int(140 * k)), width=max(2, int(6 * k)))
 
-def build(name, lines, scene, out, music="festive", nudge=None, cta=None, cap_size=58, seed=80, extra_stills=()):
+def build(name, lines, scene, out, music="festive", nudge=None, cta=None, cap_size=58, seed=80, extra_stills=(), cap_bg=(40, 10, 20, 215)):
     R = Reel(name, music, lines, tone="warm", seed=seed)
-    R.cap_style.update(fontfile=f"{FONTS}/Hind-Bold.ttf", size=cap_size, lh=74, maxchars=34, fg=(255, 248, 235), hi=(255, 196, 70), bg=(40, 10, 20, 215))
+    R.cap_style.update(fontfile=f"{FONTS}/Hind-Bold.ttf", size=cap_size, lh=74, maxchars=34, fg=(255, 248, 235), hi=(255, 196, 70), bg=cap_bg)
     dur = R.build_audio(f"{out}/cache")
     if nudge: R.nudge = dict(at=round(dur * .38, 2), **nudge)
     if cta: R.cta = dict(at=R.T("cta"), **cta)
