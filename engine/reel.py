@@ -103,8 +103,9 @@ class Reel:
         for x in self.lines:
             if x.t0 - 0.08 <= t <= x.t1 + min(x.gap, 0.3): L = x
         if L is None: return
-        st = self.cap_style; font = F(st["font"], 52)
-        rows = self.wrap((L.cap or L.say).replace("|", ""), font)
+        st = self.cap_style
+        font = ImageFont.truetype(st["fontfile"], st.get("size", 56)) if st.get("fontfile") else F(st["font"], 52)
+        rows = self.wrap((L.cap or L.say).replace("|", ""), font, maxchars=st.get("maxchars", 24))
         chunks = [rows[i:i + 2] for i in range(0, len(rows), 2)]
         nch = sum(len(" ".join(c)) for c in chunks); p = (t - L.t0) / max(.01, L.t1 - L.t0)
         acc, ci = 0, 0
@@ -112,11 +113,11 @@ class Reel:
             acc += len(" ".join(c))
             if p * nch <= acc or i == len(chunks) - 1: ci = i; break
         chunk = chunks[ci]; before = sum(len(" ".join(c)) for c in chunks[:ci])
-        y0 = 1145 - (len(chunk) * 64) // 2
+        lh = st.get("lh", 64); y0 = 1145 - (len(chunk) * lh) // 2
         ov = Image.new("RGBA", (W, H), (0, 0, 0, 0)); od = ImageDraw.Draw(ov)
         bw = max(od.textlength(r, font=font) for r in chunk) + 70
         if L.who: bw = max(bw, 260)
-        od.rounded_rectangle((520 - bw / 2, y0 - 22, 520 + bw / 2, y0 + len(chunk) * 64 + 8), 26, fill=st["bg"])
+        od.rounded_rectangle((520 - bw / 2, y0 - 22, 520 + bw / 2, y0 + len(chunk) * lh + 8), 26, fill=st["bg"])
         fr.img.alpha_composite(ov) if fr.img.mode == "RGBA" else fr.img.paste(Image.alpha_composite(fr.img.convert("RGBA"), ov).convert("RGB"))
         fr.d = ImageDraw.Draw(fr.img)
         if L.who:
@@ -124,7 +125,7 @@ class Reel:
         done_chars = (p * nch - before)
         k = 0
         for r_i, row in enumerate(chunk):
-            y = y0 + r_i * 64; x = 520 - fr.d.textlength(row, font=font) / 2
+            y = y0 + r_i * lh; x = 520 - fr.d.textlength(row, font=font) / 2
             for wd in row.split(" "):
                 col = st["hi"] if k <= done_chars < k + len(wd) + 1 else st["fg"]
                 fr.text((x, y), wd, font, col); x += fr.d.textlength(wd + " ", font=font); k += len(wd) + 1
@@ -142,8 +143,9 @@ class Reel:
         blink = (int(a / .45) % 2 == 0)                 # blink: alternate full / dimmed every 0.45 s
         x0, y0 = n.get("xy", (90, 1262)); h = 130; maxw = 900 - x0 - 150
         size = 66
-        while size > 44 and fr.d.textlength(n["text"], font=F("black", size)) > maxw: size -= 2
-        font = F("black", size); tw = fr.d.textlength(n["text"], font=font)
+        FN = (lambda z: ImageFont.truetype(n["fontfile"], z)) if n.get("fontfile") else (lambda z: F("black", z))
+        while size > 44 and fr.d.textlength(n["text"], font=FN(size)) > maxw: size -= 2
+        font = FN(size); tw = fr.d.textlength(n["text"], font=font)
         w = tw + 150
         bg = n.get("bg", (255, 255, 255)); fg = n.get("fg", (20, 20, 20))
         if not blink: bg, fg = fg, bg                    # invert colours on the off-beat so it reads as blinking
@@ -178,9 +180,11 @@ class Reel:
         od.polygon([(ax + 30, ay), (ax - 6, ay - 26), (ax - 6, ay + 26)], fill=c.get("acc", (225, 30, 30)) + (255,))
         fr.img.paste(Image.alpha_composite(fr.img.convert("RGBA"), ov).convert(fr.img.mode)); fr.d = ImageDraw.Draw(fr.img)
         fg = c.get("fg", (15, 15, 15))
-        fr.text((x0 + 200, y0 + dy + 85), c["head"], F("black", 76), c.get("acc", (225, 30, 30)))
-        fr.text((x0 + 60, y0 + dy + 210), c["body"], F("xb", 54), fg, spacing=10)
-        if c.get("sub"): fr.text((x0 + 60, y1 + dy - 110), c["sub"], F("b", 44), fg)
+        FH = (lambda z: ImageFont.truetype(c["fontfile"], z)) if c.get("fontfile") else (lambda z: F("black", z))
+        FB = (lambda z: ImageFont.truetype(c["fontfile"], z)) if c.get("fontfile") else (lambda z: F("xb", z))
+        fr.text((x0 + 200, y0 + dy + 85), c["head"], FH(76), c.get("acc", (225, 30, 30)))
+        fr.text((x0 + 60, y0 + dy + 210), c["body"], FB(54), fg, spacing=10)
+        if c.get("sub"): fr.text((x0 + 60, y1 + dy - 110), c["sub"], FB(44), fg)
         fr.box((x0, y0 + dy, x1 + 8, y1 + dy + 12), "cta card")
 
     # ---------- render ----------

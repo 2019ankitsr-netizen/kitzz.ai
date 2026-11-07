@@ -100,6 +100,7 @@ STYLES = {  # bpm, chord roots (midi), chord quality, lead kind, drums
     "story":  dict(bpm=92,  prog=[60, 55, 57, 53], q=[0, 4, 7, 11], lead="mallet", drums="soft"),
     "cctv":   dict(bpm=84,  prog=[50, 50, 46, 48], q=[0, 3, 7], lead="bell", drums="tick"),
     "swiss":  dict(bpm=120, prog=[52, 52, 48, 50], q=[0, 3, 7], lead="pluck", drums="hard"),
+    "festive": dict(bpm=96, prog=[60, 65, 67, 60], q=[0, 4, 7, 11, 14], lead="bell", drums="dholak"),
     "space":  dict(bpm=76,  prog=[57, 53, 48, 55], q=[0, 7, 14, 16], lead="bell", drums="none"),
 }
 def music(style, dur, seed=0, drop=()):
@@ -122,6 +123,9 @@ def music(style, dur, seed=0, drop=()):
             if dr in ("pulse", "hard", "soft"): place(buf, hat(.05 if dr == "soft" else .07), tb + beat / 2)
             if dr == "soft" and b == 0: place(buf, kick(.22), tb)
             if dr == "tick": place(buf, hat(.06), tb); place(buf, hat(.03), tb + beat / 2)
+            if dr == "dholak":
+                place(buf, kick(.30 if b % 2 == 0 else .18), tb); place(buf, snare(.08), tb + beat * .5)
+                if b == 3: place(buf, snare(.07), tb + beat * .75)
         t += bar; i += 1
     buf = buf[:int(SR * dur)]
     env = np.ones_like(buf)
