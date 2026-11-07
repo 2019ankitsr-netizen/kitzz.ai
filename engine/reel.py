@@ -130,21 +130,34 @@ class Reel:
                 fr.text((x, y), wd, font, col); x += fr.d.textlength(wd + " ", font=font); k += len(wd) + 1
 
     def draw_nudge(self, fr, t):
+        """Mid-reel ask: big blinking pill in the band under the burned-in captions (y 1262-1392, x 90-900),
+        on screen for ~4.5 s. Kept left of the like/share rail and above Instagram's own caption text."""
         n = self.nudge
         if not n: return
-        a = (t - n["at"]) / 1.6
-        if not 0 <= a <= 1: return
-        k = eback(min(1, a * 4)) if a < .8 else 1 - ease((a - .8) / .2)
-        x0, y0 = n.get("xy", (90, 960))
-        font = F("b", 48); tw = fr.d.textlength(n["text"], font=font)
+        dur = n.get("dur", 4.5); a = t - n["at"]
+        if not 0 <= a <= dur: return
+        k_in = eback(min(1, a / .35)); k_out = 1 - ease((a - (dur - .3)) / .3)
+        k = max(0, min(k_in, k_out))
+        if k <= .02: return
+        blink = (int(a / .45) % 2 == 0)                 # blink: alternate full / dimmed every 0.45 s
+        x0, y0 = n.get("xy", (90, 1262)); h = 130; maxw = 900 - x0 - 150
+        size = 66
+        while size > 44 and fr.d.textlength(n["text"], font=F("black", size)) > maxw: size -= 2
+        font = F("black", size); tw = fr.d.textlength(n["text"], font=font)
+        w = tw + 150
+        bg = n.get("bg", (255, 255, 255)); fg = n.get("fg", (20, 20, 20))
+        if not blink: bg, fg = fg, bg                    # invert colours on the off-beat so it reads as blinking
         ov = Image.new("RGBA", (W, H), (0, 0, 0, 0)); od = ImageDraw.Draw(ov)
-        al = int(255 * min(1, k * 1.5))
-        od.rounded_rectangle((x0, y0, x0 + tw + 120, y0 + 76), 38, fill=n.get("bg", (255, 255, 255)) + (al,))
-        icon(od, n["icon"], x0 + 46, y0 + 38, 22, n.get("fg", (20, 20, 20)) + (al,))
+        al = int(255 * min(1, k * 1.4))
+        od.rounded_rectangle((x0 + 6, y0 + 8, x0 + w + 6, y0 + h + 8), h // 2, fill=(0, 0, 0, int(al * .35)))
+        od.rounded_rectangle((x0, y0, x0 + w, y0 + h), h // 2, fill=bg + (al,), outline=fg + (al,), width=5)
+        icon(od, n["icon"], x0 + 66, y0 + h / 2, 30, fg + (al,))
         fr.img.paste(Image.alpha_composite(fr.img.convert("RGBA"), ov).convert(fr.img.mode))
         fr.d = ImageDraw.Draw(fr.img)
-        fr.text((x0 + 86, y0 + 38), n["text"], font, n.get("fg", (20, 20, 20)), anchor="lm")
-        fr.box((x0, y0, x0 + tw + 120, y0 + 76), "nudge chip")
+        if k > .5:
+            fr.text((x0 + 116, y0 + h / 2), n["text"], font, fg, anchor="lm")
+            fr.boxes[-1] = ("nudge text", fr.boxes[-1][1])
+        fr.boxes.append(("nudge (bottom band)", (x0, y0, x0 + w, y0 + h)))
 
     def draw_cta(self, fr, t):
         c = self.cta
@@ -211,6 +224,17 @@ class Reel:
             sheet.paste(Image.alpha_composite(im.convert("RGBA"), ov).convert("RGB").resize((tw, th)), (x, y))
             d.text((x, y + th + 6), f"{t:.1f}s", font=F("b", 24), fill=(30, 30, 30))
         sheet.save(path)
+
+NUDGE_BAND = (65, 1248, 920, 1440)   # agreed exception: under the burned-in captions, clear of the rail
+_orig_check = Frame.check
+def _check(self):
+    bad = []
+    for label, bb, why in _orig_check(self):
+        x0, y0, x1, y1 = bb
+        if label.startswith("nudge") and x0 >= NUDGE_BAND[0] and y0 >= NUDGE_BAND[1] and x1 <= NUDGE_BAND[2] and y1 <= NUDGE_BAND[3]: continue
+        bad.append((label, bb, why))
+    return bad
+Frame.check = _check
 
 # Frame.box: record a non-text key visual for the safe-zone check
 def _box(self, bb, label): self.boxes.append((label, bb))

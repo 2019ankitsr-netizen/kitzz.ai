@@ -169,11 +169,11 @@ def build(out):
     R = Reel("S3_CCTVRiddle_case01_MissingRupee", "cctv", LINES, tone="warm", seed=3)
     R.cap_style.update(hi=(255, 220, 80), bg=(0, 0, 0, 200))
     dur = R.build_audio(f"{out}/cache")
-    R.nudge = dict(text="Send to your smartest friend", icon="send", at=round(dur * .4, 2), xy=(90, 430), bg=(255, 220, 80), fg=(20, 20, 20))
+    R.nudge = dict(text="Send to a smart friend", icon="send", at=round(dur * .38, 2), bg=(255, 220, 80), fg=(20, 20, 20))
     R.cta = dict(at=R.T("cta"), until=R.T("loop") - .05, icon="comment", head="Your answer?", body="Comment it. Then send\nit to the smartest\nperson you know.",
                  bg=(250, 238, 200), acc=(200, 30, 30), fg=(40, 30, 20))
     tags = ["hook", "log", "pay", "refund", "split", "math", "where", "clue", "cta", "loop"]
-    stills = sorted([.7] + [R.T(x) + 1.2 for x in tags] + [R.line("math").t1 - .2, R.nudge["at"] + .5, R.line("clue").t0 + .3, dur - .3])
+    stills = sorted([.7] + [R.T(x) + 1.2 for x in tags] + [R.line("math").t1 - .2, R.nudge["at"] + 1.0, R.line("clue").t0 + .3, dur - .3])
     return R, R.render(scene, out, stills=stills)
 
 if __name__ == "__main__":

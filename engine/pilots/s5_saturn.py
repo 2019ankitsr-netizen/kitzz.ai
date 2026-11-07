@@ -134,10 +134,10 @@ def build(out):
     R = Reel("S5_SpaceTransit_stop01_SaturnsRings", "space", LINES, tone="bright", seed=5)
     R.cap_style.update(fg=(255, 255, 255), hi=(255, 190, 60), bg=(8, 10, 20, 210))
     dur = R.build_audio(f"{out}/cache")
-    R.nudge = dict(text="Save this ride", icon="save", at=round(dur * .4, 2), xy=(90, 965), bg=(255, 190, 60), fg=(15, 15, 25))
+    R.nudge = dict(text="Save this ride", icon="save", at=round(dur * .38, 2), bg=(255, 190, 60), fg=(15, 15, 25))
     R.cta = dict(at=R.T("cta"), icon="save", head="Save this ride", body="Tag who you'd\ntake to Saturn.", bg=(16, 20, 36), acc=(255, 190, 60), fg=(255, 255, 255))
     stills = sorted([.6, 2.5] + [R.T(x) + 1.3 for x in ["window", "fact1", "thin", "ice", "theory", "imagine", "next", "cta"]]
-                    + [R.line("fact1").t1 - .3, R.line("thin").t1 - .2, R.nudge["at"] + .5, R.line("imagine").t1 - .2, dur - .2])
+                    + [R.line("fact1").t1 - .3, R.line("thin").t1 - .2, R.nudge["at"] + 1.0, R.line("imagine").t1 - .2, dur - .2])
     return R, R.render(scene, out, stills=stills)
 
 if __name__ == "__main__":

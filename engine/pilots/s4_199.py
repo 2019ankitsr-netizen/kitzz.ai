@@ -76,10 +76,10 @@ def build(out):
     R = Reel("S4_HookShots_02_Rs199", "swiss", LINES, tone="warm", seed=4)
     R.cap_style.update(fg=(255, 255, 255), hi=(255, 90, 90), bg=(15, 15, 15, 235))
     dur = R.build_audio(f"{out}/cache")
-    R.nudge = dict(text="Send this", icon="send", at=round(dur * .4, 2), xy=(90, 968), bg=RED, fg=(255, 255, 255))
+    R.nudge = dict(text="Send this to someone", icon="send", at=round(dur * .38, 2), bg=RED, fg=(255, 255, 255))
     R.cta = dict(at=R.T("cta"), icon="send", head="Send this", body="to someone.\nThey won't believe it.", bg=INK, acc=RED, fg=(255, 255, 255), until=R.T("loop") - .05)
     stills = sorted([.4, .9] + [R.T(x) + .6 for x in ["fell", "left", "onetwo", "nyu", "only", "compare", "cta", "loop"]]
-                    + [R.line("onetwo").t1 - .2, R.line("compare").t1 - .2, R.nudge["at"] + .5, dur - .2])
+                    + [R.line("onetwo").t1 - .2, R.line("compare").t1 - .2, R.nudge["at"] + 1.0, dur - .2])
     return R, R.render(scene, out, stills=stills)
 
 if __name__ == "__main__":

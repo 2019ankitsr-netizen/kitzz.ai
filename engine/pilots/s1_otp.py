@@ -136,11 +136,11 @@ def build(out):
     R = Reel("S1_HowThingsWork_ep01_OTP", "xray", LINES, tone="warm", seed=1)
     R.cap_style.update(hi=(255, 210, 60))
     dur = R.build_audio(f"{out}/cache")
-    R.nudge = dict(text="Save this", icon="save", at=round(dur * .4, 2), xy=(665, 352))
+    R.nudge = dict(text="Save this for later", icon="save", at=round(dur * .38, 2))
     R.cta = dict(at=R.T("cta"), until=R.T("loop") - .05, icon="save", head="Save it.", body="Send it to the friend\nwho reads OTPs\nout loud on calls.",
                  bg=(255, 255, 255), acc=(225, 150, 0), fg=(15, 20, 40))
     stills = [.6, R.T("route") + 1, R.T("s1") + 1, R.T("s2") + 1.5, R.T("s3") + 1, R.T("block") + 1.5, R.T("s4") + 2,
-              R.nudge["at"] + .5, R.T("payoff") + 1, R.T("never") + 1, R.T("cta") + 1, dur - .3]
+              R.nudge["at"] + 1.0, R.T("payoff") + 1, R.T("never") + 1, R.T("cta") + 1, dur - .3]
     return R, R.render(scene, out, stills=sorted(stills))
 
 if __name__ == "__main__":

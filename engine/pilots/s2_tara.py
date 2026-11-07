@@ -166,11 +166,11 @@ def build(out):
     R = Reel("S2_AIKiKahani_ep01_TaraKaPehlaDin", "story", LINES, tone="bright", pitch=1.0, seed=2)
     R.cap_style.update(fg=(255, 250, 240), hi=(255, 200, 90), bg=(60, 35, 25, 215), who_fg=(255, 200, 90), who_stroke=(60, 35, 25))
     dur = R.build_audio(f"{out}/cache")
-    R.nudge = dict(text="Tag a friend", icon="send", at=round(dur * .4, 2), xy=(560, 282), bg=(60, 35, 25), fg=(255, 245, 230))
+    R.nudge = dict(text="Tag a friend who needs Tara", icon="send", at=round(dur * .38, 2), bg=(60, 35, 25), fg=(255, 245, 230))
     R.cta = dict(at=R.T("cta"), icon="follow", head="Part 2 kal", body="Follow karo, warna\nTara ka sach\nmiss ho jayega.",
                  bg=(255, 250, 240), acc=(200, 80, 40), fg=(60, 35, 25))
     tags = ["hook", "tara", "b1", "t2", "test", "chai", "biscuit", "secret", "b3", "t4", "cliff", "cta"]
-    stills = sorted([.7] + [R.T(x) + .9 for x in tags] + [R.nudge["at"] + .5, R.line("cliff").t1 - .3, dur - .3])
+    stills = sorted([.7] + [R.T(x) + .9 for x in tags] + [R.nudge["at"] + 1.0, R.line("cliff").t1 - .3, dur - .3])
     return R, R.render(scene, out, stills=stills)
 
 if __name__ == "__main__":
