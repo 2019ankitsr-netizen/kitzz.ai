@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="hi" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<title>Bhai Dooj - kitzz.ai</title>
+<script src="gsap.min.js"></script>
+<script src="timings.js"></script>
+<style>
+@font-face { font-family: "Hind"; src: url("fonts/Hind-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "Hind"; src: url("fonts/Hind-SemiBold.ttf"); font-weight: 600; }
+@font-face { font-family: "Yatra"; src: url("fonts/YatraOne-Regular.ttf"); }
+html, body { margin: 0; padding: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0e0a1c; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Hind", sans-serif; }
+#stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+.title { position: absolute; left: 65px; width: 950px; top: 300px; text-align: center; font-family: "Yatra"; font-size: 104px; line-height: 1.15;
+  color: #ffe2a6; text-shadow: 0 6px 24px rgba(0,0,0,.6); opacity: 0; }
+.sub { position: absolute; left: 65px; width: 950px; top: 432px; text-align: center; font-weight: 600; font-size: 40px; letter-spacing: 5px;
+  color: #fff3d6; text-shadow: 0 3px 12px rgba(0,0,0,.7); opacity: 0; }
+.cap { position: absolute; left: 110px; width: 820px; top: 1066px; text-align: center; font-weight: 700; font-size: 50px; line-height: 1.28; color: #fff; opacity: 0; }
+.cap span.box { background: rgba(14, 8, 24, .8); padding: 10px 26px; border-radius: 22px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.cap b { color: #ffc65c; }
+.cap .who { display: inline-block; font-size: 30px; letter-spacing: 4px; padding: 2px 16px; border-radius: 14px; margin-bottom: 10px; color: #1b1030; }
+.cap .who.YAMUNA { background: #7fd3ff; } .cap .who.YAMRAJ { background: #ffb36b; }
+#years { position: absolute; left: 110px; top: 560px; width: 210px; height: 230px; border-radius: 22px; background: #fff6e4; opacity: 0;
+  box-shadow: 0 10px 0 rgba(0,0,0,.25); text-align: center; overflow: hidden; }
+#years .bar { height: 54px; background: #c0392b; color: #fff; font-weight: 700; font-size: 32px; line-height: 54px; letter-spacing: 3px; }
+#years .yn { position: absolute; left: 0; width: 100%; top: 62px; font-family: "Yatra"; font-size: 120px; color: #2a1606; line-height: 1.2; opacity: 0; }
+#nudge { position: absolute; left: 90px; top: 1262px; height: 130px; border-radius: 65px; padding: 0 50px 0 36px; display: flex; align-items: center; gap: 22px;
+  background: #ffc65c; color: #2a1606; font-weight: 700; font-size: 60px; opacity: 0; box-shadow: 0 8px 0 rgba(0,0,0,.25); }
+#nudge.inv { background: #2a1606; color: #ffc65c; }
+#cta { position: absolute; left: 90px; top: 560px; width: 810px; height: 440px; border-radius: 44px; background: #fff6e4; opacity: 0; box-shadow: 0 14px 0 rgba(0,0,0,.25); }
+#cta .h { position: absolute; left: 190px; top: 70px; font-weight: 700; font-size: 80px; color: #b23a12; }
+#cta .b { position: absolute; left: 60px; top: 200px; width: 700px; font-weight: 700; font-size: 50px; color: #2a1606; line-height: 1.3; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="bhaidooj" data-width="1080" data-height="1920" data-start="0" data-duration="{{DUR}}">
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d1442"/><stop offset=".45" stop-color="#5a2a6e"/><stop offset=".72" stop-color="#d0675a"/><stop offset="1" stop-color="#f4b26e"/></linearGradient>
+  <linearGradient id="gDawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd58a"/><stop offset=".6" stop-color="#ffb070"/><stop offset="1" stop-color="#ffe4b0"/></linearGradient>
+  <linearGradient id="gRiver" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a6fb5"/><stop offset="1" stop-color="#1c3570"/></linearGradient>
+  <linearGradient id="gEarth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2433"/><stop offset="1" stop-color="#120a16"/></linearGradient>
+  <radialGradient id="gGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff2c4" stop-opacity=".95"/><stop offset="1" stop-color="#fff2c4" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gFlame" cx=".5" cy=".6" r=".5"><stop offset="0" stop-color="#fff6c0"/><stop offset=".6" stop-color="#ffb02e"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
+  <g id="diya"><ellipse cx="0" cy="0" rx="22" ry="9" fill="#b4602a"/><path d="M-22 -2 q22 16 44 0" fill="#8a4518"/><ellipse cx="0" cy="-18" rx="14" ry="20" fill="url(#gFlame)"/><path d="M0 -8 q-6 -10 0 -22 q6 12 0 22" fill="#fff3c0"/></g>
+  <!-- Yamraj head: origin = head centre -->
+  <g id="yHead">
+    <path d="M-34 -38 h68 l-6 -70 l-16 26 l-12 -44 l-12 44 l-16 -26 z" fill="#e8b23a"/><circle cx="0" cy="-104" r="9" fill="#d23c3c"/>
+    <rect x="-38" y="-44" width="76" height="12" rx="6" fill="#c98a1e"/>
+    <circle cx="0" cy="0" r="46" fill="#3e4f7a"/>
+    <circle cx="-46" cy="4" r="9" fill="#3e4f7a"/><circle cx="46" cy="4" r="9" fill="#3e4f7a"/><circle cx="-47" cy="18" r="6" fill="#e8b23a"/><circle cx="47" cy="18" r="6" fill="#e8b23a"/>
+    <g class="ystern"><path d="M-30 -18 l20 6 M30 -18 l-20 6" stroke="#121a30" stroke-width="6" stroke-linecap="round"/></g>
+    <g class="ysoft" opacity="0"><path d="M-30 -14 q10 -8 20 -2 M30 -14 q-10 -8 -20 -2" stroke="#121a30" stroke-width="6" stroke-linecap="round" fill="none"/></g>
+    <g class="eyes"><ellipse cx="-17" cy="-2" rx="8" ry="7" fill="#fff"/><ellipse cx="17" cy="-2" rx="8" ry="7" fill="#fff"/><circle cx="-16" cy="-1" r="4" fill="#121a30"/><circle cx="18" cy="-1" r="4" fill="#121a30"/></g>
+    <path d="M-30 20 q15 -14 30 -4 q15 -10 30 4 q-8 -4 -14 2 q-8 -6 -16 -2 q-8 -4 -16 2 q-6 -6 -14 -2z" fill="#121a30"/>
+    <g class="mstern"><path d="M-10 32 h20" stroke="#121a30" stroke-width="4" stroke-linecap="round"/></g>
+    <g class="msoft" opacity="0"><path d="M-12 30 q12 10 24 0" stroke="#121a30" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+    <g class="ytilak" opacity="0"><path d="M0 -30 v-14" stroke="#e01b2e" stroke-width="8" stroke-linecap="round"/><circle cx="-3" cy="-24" r="2.4" fill="#fff6e0"/><circle cx="3" cy="-22" r="2.4" fill="#fff6e0"/></g>
+  </g>
+  <!-- Yamraj full body, feet at 0,0 -->
+  <g id="yBody">
+    <path d="M-60 -150 L60 -150 L72 -6 L-72 -6 Z" fill="#8e1c2c"/><path d="M-60 -150 L60 -150 L58 -126 L-58 -126 Z" fill="#e8b23a"/>
+    <rect x="-56" y="-262" width="112" height="118" rx="38" fill="#3e4f7a"/>
+    <path d="M-52 -250 L50 -160 L40 -150 L-56 -232 Z" fill="#e8b23a"/>
+    <ellipse cx="-30" cy="-3" rx="20" ry="8" fill="#2b3658"/><ellipse cx="30" cy="-3" rx="20" ry="8" fill="#2b3658"/>
+  </g>
+  <!-- Yamuna head -->
+  <g id="mHead">
+    <path d="M-50 -10 q-6 -56 50 -60 q56 4 50 60 q-8 70 -18 120 l-14 0 q10 -60 6 -100 l-48 0 q-4 40 6 100 l-14 0 q-10 -50 -18 -120z" fill="#141022"/>
+    <circle cx="0" cy="0" r="42" fill="#9a6440"/>
+    <path d="M-44 -6 q2 -44 44 -46 q42 2 44 46 q-14 -26 -44 -28 q-30 2 -44 28z" fill="#141022"/>
+    <circle cx="0" cy="-22" r="5" fill="#d0142a"/>
+    <g class="eyes"><path d="M-22 -2 q8 -7 16 0 q-8 6 -16 0z" fill="#fff"/><path d="M6 -2 q8 -7 16 0 q-8 6 -16 0z" fill="#fff"/><circle cx="-14" cy="-2" r="3.6" fill="#1a0f12"/><circle cx="14" cy="-2" r="3.6" fill="#1a0f12"/></g>
+    <path d="M-10 20 q10 9 20 0" stroke="#7a1b2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <circle cx="-42" cy="10" r="6" fill="#f2c14a"/><circle cx="42" cy="10" r="6" fill="#f2c14a"/><circle cx="12" cy="8" r="2.4" fill="#f2c14a"/>
+  </g>
+  <g id="mBody">
+    <path d="M-62 -6 L-46 -150 L46 -150 L62 -6 Z" fill="#2f6fd0"/><path d="M-62 -6 L62 -6 L60 -24 L-60 -24 Z" fill="#f2c14a"/>
+    <rect x="-44" y="-246" width="88" height="104" rx="32" fill="#9a6440"/>
+    <path d="M-46 -240 L46 -150 L46 -128 L-46 -214 Z" fill="#2f6fd0"/><path d="M-46 -240 L46 -150" stroke="#f2c14a" stroke-width="6"/>
+    <path d="M-24 -230 q24 22 48 0" stroke="#f2c14a" stroke-width="5" fill="none" stroke-dasharray="1 9" stroke-linecap="round"/>
+  </g>
+  <g id="thali"><ellipse cx="0" cy="0" rx="58" ry="16" fill="#e8b23a"/><ellipse cx="0" cy="-4" rx="48" ry="11" fill="#f7d26a"/><use href="#diya" x="-14" y="-8" transform="scale(.8)"/>
+    <circle cx="22" cy="-8" r="9" fill="#e01b2e"/><circle cx="36" cy="-6" r="6" fill="#fff6e0"/></g>
+  <g id="hut"><rect x="-90" y="-120" width="180" height="120" fill="#c98a4b"/><polygon points="-120,-116 0,-210 120,-116" fill="#8a3a2a"/><rect x="-28" y="-80" width="56" height="80" fill="#3a1a12"/>
+    <use href="#diya" x="-60" y="-4"/><use href="#diya" x="60" y="-4"/></g>
+  <g id="petal"><path d="M0 0 q8 -10 0 -22 q-8 12 0 22" fill="#ff8fb0"/></g>
+</defs>
+
+<!-- PARALLAX WORLD -->
+<rect x="0" y="0" width="1080" height="1920" fill="url(#gSky)"/>
+<rect id="dawn" x="0" y="0" width="1080" height="1920" fill="url(#gDawn)" opacity="0"/>
+<g id="stars">{{STARS}}</g>
+<g id="moon"><circle cx="820" cy="520" r="110" fill="url(#gGlow)" opacity=".7"/><circle cx="820" cy="520" r="54" fill="#fff1c8"/><circle cx="842" cy="508" r="48" fill="#5a2a6e" opacity=".0"/></g>
+<g id="rays" opacity="0"><polygon points="540,640 360,0 470,0" fill="#fff3c8" opacity=".35"/><polygon points="540,640 610,0 720,0" fill="#fff3c8" opacity=".3"/><polygon points="540,640 830,0 950,0" fill="#fff3c8" opacity=".25"/><polygon points="540,640 140,0 250,0" fill="#fff3c8" opacity=".25"/></g>
+<g id="far"><path d="M-200 900 C0 760 200 800 360 860 C520 760 760 740 1280 880 L1280 1000 L-200 1000Z" fill="#3a2a5a" opacity=".85"/></g>
+<g id="river"><rect x="-200" y="920" width="1480" height="90" fill="url(#gRiver)"/>
+  <g id="waves" stroke="#9cc8ff" stroke-width="4" fill="none" opacity=".7">{{WAVES}}</g></g>
+<g id="near"><g id="bank"><rect x="-200" y="1000" width="1480" height="920" fill="url(#gEarth)"/><path d="M-200 1000 C200 985 600 1000 1280 995 L1280 1012 L-200 1012Z" fill="#6b8f3a"/></g>
+<g id="homeIn"><g id="home"><use href="#hut" x="250" y="1000"/></g></g>
+
+<!-- characters -->
+<g id="yamunaIn"><g id="yamuna" transform="translate(470 1000)"><g class="breathe"><use href="#mBody"/><g class="head" transform="translate(0 -290)"><g class="bob"><use href="#mHead"/></g></g></g>
+  <g id="mThali" opacity="0" transform="translate(70 -170)"><g class="spin"><use href="#thali"/></g></g>
+  <path id="mWave" d="M44 -240 q40 -40 30 -110" stroke="#9a6440" stroke-width="18" fill="none" stroke-linecap="round" opacity="0"/></g></g>
+<g id="yamraj" transform="translate(1280 1000)"><g class="breathe"><use href="#yBody"/><g class="head" transform="translate(0 -320)"><g class="bob"><use href="#yHead"/></g></g></g>
+  <g transform="translate(-92 0)"><rect x="-7" y="-300" width="14" height="300" rx="7" fill="#6b3a1e"/><circle cx="0" cy="-312" r="24" fill="#e8b23a"/></g>
+  <path id="yBless" d="M56 -240 q40 -30 46 -96" stroke="#3e4f7a" stroke-width="20" fill="none" stroke-linecap="round" opacity="0"/>
+  <g id="scroll" opacity="0" transform="translate(70 -170)"><rect x="-10" y="-30" width="120" height="70" rx="8" fill="#f3e2b8"/><path d="M5 -14 h90 M5 0 h80 M5 14 h90" stroke="#8a6a3a" stroke-width="4"/></g></g>
+</g>
+
+<!-- close-up layer -->
+<g id="close" opacity="0"><rect x="0" y="0" width="1080" height="1920" fill="#20163a"/><circle cx="540" cy="700" r="420" fill="url(#gGlow)" opacity=".35"/>
+  <g id="closeZoom"><g transform="translate(540 760) scale(4.2)"><use href="#yHead"/></g></g>
+  <g id="tilakStroke" opacity="0"><path d="M540 672 v-52" stroke="#e01b2e" stroke-width="30" stroke-linecap="round"/><circle cx="528" cy="650" r="9" fill="#fff6e0"/><circle cx="552" cy="658" r="9" fill="#fff6e0"/></g>
+  <g id="aartiRing"><use href="#diya" x="540" y="540" transform="scale(1)"/></g>
+</g>
+<g id="sparks">{{SPARKS}}</g>
+<g id="petals" opacity="0">{{PETALS}}</g>
+</svg>
+
+<div id="years"><div class="bar">बरसों</div>{{YEARS}}</div>
+<div class="title" id="tYamuna">यमुना</div><div class="sub" id="sYamuna">यमराज की बहन</div>
+<div class="title" id="tDate" style="font-size:84px">कार्तिक शुक्ल द्वितीया</div>
+<div class="title" id="tName" style="font-size:130px">भाई दूज</div><div class="sub" id="sName" style="top:470px">यम द्वितीया</div>
+{{CAPS}}
+<div id="nudge"><svg width="60" height="60" viewBox="0 0 60 60"><path d="M6 30 L54 8 L42 54 L30 36 Z" fill="currentColor"/></svg>भाई-बहन को भेजो</div>
+<div id="cta"><svg style="position:absolute;left:70px;top:70px" width="96" height="96" viewBox="0 0 60 60"><path d="M6 30 L54 8 L42 54 L30 36 Z" fill="#b23a12"/></svg>
+  <div class="h">भेजो!</div><div class="b">अपने भाई या बहन को,<br/>और पूछो: “टीका कब?”</div></div>
+
+<script>
+(function () {
+  const T = window.T, D = window.DUR, q = s => document.querySelector(s), t = g => T.at[g];
+  const tl = gsap.timeline({ paused: true });
+  // captions
+  T.lines.forEach((L, i) => { const el = q('#cap' + i), end = i + 1 < T.lines.length ? T.lines[i + 1].t0 - .05 : D;
+    tl.fromTo(el, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .2 }, L.t0 - .05); tl.to(el, { opacity: 0, duration: .15 }, end - .15); });
+  // idle life: breathing + blinking + twinkling stars + waves + sparks
+  ['#yamuna .breathe', '#yamraj .breathe'].forEach((s, k) => tl.fromTo(s, { scaleY: 1 }, { scaleY: 1.018, transformOrigin: '50% 100%', duration: 1.3, yoyo: true, repeat: Math.ceil(D / 1.3), ease: 'sine.inOut' }, k * .4));
+  for (let b = 1.8; b < D; b += 3.1) { tl.to('.eyes', { scaleY: .1, transformOrigin: '50% 50%', duration: .06 }, b); tl.to('.eyes', { scaleY: 1, duration: .08 }, b + .1); }
+  tl.fromTo('#waves', { x: 0 }, { x: -120, duration: 2.4, ease: 'none', repeat: Math.ceil(D / 2.4) }, 0);
+  document.querySelectorAll('#stars circle').forEach((c, i) => tl.fromTo(c, { opacity: .25 }, { opacity: 1, duration: .9 + (i % 5) * .2, yoyo: true, repeat: Math.ceil(D), ease: 'sine.inOut' }, (i % 7) * .3));
+  document.querySelectorAll('#sparks circle').forEach((c, i) => tl.fromTo(c, { y: 0, opacity: 0 }, { y: -260, opacity: 1, duration: 3 + (i % 4), repeat: Math.ceil(D / 3), ease: 'none' }, (i % 9) * .5));
+  // speaking bounce on characters
+  T.lines.forEach(L => { if (L.who === 'YAMUNA' || L.who === 'YAMRAJ') { const s = L.who === 'YAMUNA' ? '#yamuna .bob' : '#yamraj .bob';
+    tl.fromTo(s, { y: 0 }, { y: -6, duration: .18, yoyo: true, repeat: Math.max(1, Math.floor(L.dur / .18) - 1), ease: 'sine.inOut' }, L.t0); } });
+  // slow camera drift with parallax
+  const cam = (at, dur, dx) => { tl.to('#far', { x: `+=${dx * .3}`, duration: dur, ease: 'sine.inOut' }, at); tl.to('#river', { x: `+=${dx * .6}`, duration: dur, ease: 'sine.inOut' }, at);
+    tl.to('#near', { x: `+=${dx}`, duration: dur, ease: 'sine.inOut' }, at); };
+  // HOOK: Yamraj close-up, stern; a tilak appears
+  tl.set('#close', { opacity: 1 }, 0); tl.fromTo('#closeZoom', { scale: 1.08, svgOrigin: '540 760' }, { scale: 1, duration: 2.5, ease: 'power1.out' }, 0);
+  tl.fromTo('#tilakStroke', { opacity: 0, scaleY: 0, svgOrigin: '540 672' }, { opacity: 1, scaleY: 1, duration: .45, ease: 'back.out(2)' }, 1.4);
+  tl.to('#close', { opacity: 0, duration: .45 }, t('sister') - .2); tl.set('#tilakStroke', { opacity: 0 }, t('sister') + .3);
+  // SISTER: river home, Yamuna; years counter
+  tl.fromTo('#yamunaIn', { opacity: 0, x: -200 }, { opacity: 1, x: 0, duration: .8, ease: 'power2.out' }, t('sister'));
+  tl.fromTo('#tYamuna', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .45 }, t('sister') + .4); tl.fromTo('#sYamuna', { opacity: 0 }, { opacity: 1, duration: .4 }, t('sister') + .7);
+  tl.to(['#tYamuna', '#sYamuna'], { opacity: 0, duration: .3 }, t('call') - .1);
+  tl.to('#years', { opacity: 1, duration: .3 }, t('sister') + 1.6);
+  const yn = document.querySelectorAll('#years .yn'), ys = t('sister') + 1.7, ye = t('busy') + 1.2, st = (ye - ys) / yn.length;
+  yn.forEach((e, i) => { tl.set(e, { opacity: 1 }, ys + i * st); if (i + 1 < yn.length) tl.set(e, { opacity: 0 }, ys + (i + 1) * st); });
+  tl.to('#years', { opacity: 0, duration: .3 }, t('arrive') - .1);
+  // CALL: Yamuna waves
+  tl.to('#mWave', { opacity: 1, duration: .1 }, t('call')); tl.fromTo('#mWave', { rotation: -8, transformOrigin: '0% 100%' }, { rotation: 8, duration: .25, yoyo: true, repeat: 7 }, t('call'));
+  tl.to('#mWave', { opacity: 0, duration: .1 }, t('busy'));
+  // BUSY: Yamraj far right with his scroll, camera pans to him then back
+  tl.to(['#yamunaIn', '#homeIn'], { opacity: 0, duration: .35 }, t('busy') - .1);
+  tl.to('#yamraj', { attr: { transform: 'translate(560 1000)' }, duration: .01 }, t('busy') - .05);
+  tl.fromTo('#yamraj', { opacity: 0 }, { opacity: 1, duration: .35 }, t('busy'));
+  tl.set('#scroll', { opacity: 1 }, t('busy'));
+  tl.fromTo('#yamraj .bob', { rotation: -6, transformOrigin: '50% 50%' }, { rotation: 6, duration: .3, yoyo: true, repeat: 5 }, t('busy') + .4);
+  // ARRIVE: date title, Yamraj walks to the door
+  tl.set('#scroll', { opacity: 0 }, t('arrive')); tl.to('#yamraj', { opacity: 0, duration: .25 }, t('arrive') - .2);
+  tl.to('#yamraj', { attr: { transform: 'translate(1240 1000)' }, duration: .01 }, t('arrive') + .06); tl.set('#yamraj', { opacity: 1 }, t('arrive') + .08);
+  tl.to(['#yamunaIn', '#homeIn'], { opacity: 1, duration: .35 }, t('arrive')); cam(t('arrive'), 2.2, -70);
+  tl.fromTo('#tDate', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .45 }, t('arrive') + .1); tl.to('#tDate', { opacity: 0, duration: .3 }, t('tilak') - .1);
+  tl.to('#yamraj', { attr: { transform: 'translate(700 1000)' }, duration: 1.4, ease: 'sine.inOut' }, t('arrive') + .4);
+  tl.fromTo('#yamraj .breathe', { y: 0 }, { y: -10, duration: .17, yoyo: true, repeat: 7, ease: 'sine.inOut' }, t('arrive') + .4);
+  tl.to('#moon', { opacity: .35, duration: 1 }, t('arrive'));
+  // TILAK: aarti, close-up, tilak stroke, soft face
+  tl.to('#mThali', { opacity: 1, duration: .3 }, t('tilak'));
+  tl.to('#mThali .spin', { keyframes: [0,1,2,3,4,5,6,7,8].map(k => ({ x: 26 * Math.sin(k * Math.PI / 4), y: -14 * (1 - Math.cos(k * Math.PI / 4)), duration: .15 })), ease: 'none' }, t('tilak') + .1);
+  const cu = t('tilak') + 1.4;
+  tl.set('#close', { opacity: 1 }, cu); tl.fromTo('#closeZoom', { scale: 1.15, svgOrigin: '540 760' }, { scale: 1, duration: 1.2, ease: 'power2.out' }, cu);
+  tl.fromTo('#tilakStroke', { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: .5, ease: 'power2.out' }, cu + .4);
+  tl.set(['#yHead .ystern', '#yHead .mstern'], { opacity: 0 }, cu + 1.0);
+  tl.set(['#yHead .ysoft', '#yHead .msoft', '#yHead .ytilak'], { opacity: 1 }, cu + 1.0);
+  tl.to('#close', { opacity: 0, duration: .4 }, t('ask') - .25); tl.set('#tilakStroke', { opacity: 0 }, t('ask') + .2);
+  tl.to('#mThali', { opacity: 0, duration: .3 }, t('ask'));
+  // BOON: golden light, petals
+  tl.to('#dawn', { opacity: .55, duration: 1.4 }, t('boon')); tl.to('#rays', { opacity: 1, duration: 1 }, t('boon') + .4);
+  tl.to('#petals', { opacity: 1, duration: .4 }, t('boon') + .6);
+  tl.fromTo('#petals', { y: -500 }, { y: 1300, duration: (t('cta') - t('boon')), ease: 'none' }, t('boon') + .6);
+  // TATHASTU: blessing hand + flash
+  tl.to('#yBless', { opacity: 1, duration: .15 }, t('tathastu')); tl.fromTo('#root', { x: 0 }, { x: 8, duration: .05, repeat: 5, yoyo: true }, t('tathastu') + .2);
+  tl.to('#dawn', { opacity: 1, duration: .6 }, t('tathastu'));
+  // NAME
+  tl.fromTo('#tName', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)' }, t('name') + .1);
+  tl.fromTo('#sName', { opacity: 0 }, { opacity: 1, duration: .4 }, t('name') + .5);
+  tl.to(['#tName', '#sName'], { opacity: 0, duration: .3 }, t('cta') - .1);
+  // nudge 38% blinking, CTA
+  const na = D * .38; tl.fromTo('#nudge', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .35, ease: 'back.out(1.6)' }, na);
+  for (let k = 0; k < 10; k++) tl.set('#nudge', { className: k % 2 ? '' : 'inv' }, na + .45 * (k + 1));
+  tl.set('#nudge', { className: '' }, na + 4.6); tl.to('#nudge', { opacity: 0, duration: .3 }, na + 4.5);
+  tl.fromTo('#cta', { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: .45, ease: 'back.out(1.5)' }, t('cta'));
+  window.__timelines = window.__timelines || {}; window.__timelines['bhaidooj'] = tl;
+})();
+</script>
+</div>
+</body>
+</html>

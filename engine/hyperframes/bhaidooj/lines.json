@@ -1,0 +1,13 @@
+[
+ {"tag": "hook", "spk": "Rohit", "mood": "calm", "hi": "जिन यमराज से पूरी दुनिया डरती है, उन्हें भी किसी ने टीका लगाया था। जानते हो किसने?", "en": "Jin Yamraj se poori duniya darti hai, unhe bhi kisi ne teeka lagaya tha. Jaante ho kisne?", "kw": "teeka", "who": ""},
+ {"tag": "sister", "spk": "Rohit", "mood": "calm", "hi": "उनकी बहन, यमुना ने। यमुना बरसों से भाई को घर बुला रही थी।", "en": "Unki behen Yamuna ne. Yamuna barson se bhai ko ghar bula rahi thi.", "kw": "barson", "who": ""},
+ {"tag": "call", "spk": "Divya", "mood": "bright", "hi": "भैया, कभी तो मेरे घर आओ!", "en": "Bhaiya, kabhi toh mere ghar aao!", "kw": "ghar aao", "who": "YAMUNA"},
+ {"tag": "busy", "spk": "Rohit", "mood": "calm", "hi": "पर यमराज के पास, कभी फ़ुर्सत ही नहीं होती थी।", "en": "Par Yamraj ke paas kabhi fursat hi nahi hoti thi.", "kw": "fursat", "who": ""},
+ {"tag": "arrive", "spk": "Rohit", "mood": "bright", "hi": "फिर एक दिन, कार्तिक शुक्ल द्वितीया को, यमराज सच में आ गए।", "en": "Phir ek din, Kartik Shukla Dwitiya ko, Yamraj sach mein aa gaye.", "kw": "aa gaye", "who": ""},
+ {"tag": "tilak", "spk": "Rohit", "mood": "calm", "hi": "यमुना ने आरती उतारी, माथे पर टीका लगाया, और प्यार से खाना खिलाया।", "en": "Yamuna ne aarti utaari, maathe par teeka lagaya, aur pyaar se khaana khilaya.", "kw": "teeka", "who": ""},
+ {"tag": "ask", "spk": "Aman", "mood": "calm", "hi": "बहन, आज कुछ भी माँग लो।", "en": "Behen, aaj kuch bhi maang lo.", "kw": "kuch bhi", "who": "YAMRAJ"},
+ {"tag": "boon", "spk": "Divya", "mood": "calm", "hi": "बस इतना। हर साल आज के दिन, जो बहन अपने भाई को टीका लगाए, वो भाई तुमसे कभी न डरे।", "en": "Bas itna. Har saal aaj ke din, jo behen bhai ko teeka lagaye, woh bhai tumse kabhi na dare.", "kw": "kabhi na dare", "who": "YAMUNA"},
+ {"tag": "tathastu", "spk": "Aman", "mood": "calm", "hi": "तथास्तु।", "en": "Tathastu.", "kw": "Tathastu", "who": "YAMRAJ"},
+ {"tag": "name", "spk": "Rohit", "mood": "bright", "hi": "तभी से ये दिन कहलाता है, भाई दूज। यम द्वितीया।", "en": "Tabhi se ye din kehlata hai: Bhai Dooj. Yam Dwitiya.", "kw": "Bhai Dooj", "who": ""},
+ {"tag": "cta", "spk": "Rohit", "mood": "bright", "hi": "ये कहानी अपने भाई या बहन को भेजो, और पूछो, टीका कब लगवा रहे हो?", "en": "Ye kahani apne bhai ya behen ko bhejo, aur poochho: teeka kab lagwa rahe ho?", "kw": "bhejo", "who": ""}
+]
