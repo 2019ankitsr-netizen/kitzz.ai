@@ -15,7 +15,9 @@ def K():
 # ---- pronunciation: spoken text only; captions keep the normal spelling ----
 EN_FIX = [(r"\bOTPs\b", "O-T-Ps"), (r"\bOTP\b", "O-T-P"), (r"\bUPI\b", "U-P-I"), (r"\bFASTag\b", "Fast Tag"),
           (r"\bDRS\b", "D-R-S"), (r"\bSMS\b", "S-M-S"), (r"\bTRAI\b", "tray"), (r"\bDLT\b", "D-L-T"),
-          (r"\bCCTV\b", "C-C-T-V"), (r"\bAI\b", "A-I"), (r"\bkm\b", "kilometres"), (r"\bISRO\b", "is-roh"),
+          (r"\bCCTV\b", "C-C-T-V"), (r"\bNPCI\b", "N-P-C-I"), (r"\bNETC\b", "N-E-T-C"), (r"\bRFID\b", "R-F-I-D"),
+          (r"\bBBC\b", "B-B-C"), (r"\bRAM\b", "ram"), (r"\bNYU\b", "N-Y-U"), (r"\bNASA\b", "nasa"), (r"Chang'e", "Chahng-uh"),
+          (r"(\d+) KB\b", r"\1 kilobytes"), (r"(\d+) GB\b", r"\1 gigabytes"), (r"\bAI\b", "A-I"), (r"\bkm\b", "kilometres"), (r"\bISRO\b", "is-roh"),
           (r"₹\s?([\d,]+)", lambda m: m.group(1).replace(",", "") + (" rupee" if m.group(1) == "1" else " rupees"))]
 HI_PH = [("ˈeː ˈaːi", "ˌeɪˈaɪ"), ("eːˈaːi", "ˌeɪˈaɪ")]   # write AI as "ए आई" in Hindi scripts
 def en_spoken(s):
