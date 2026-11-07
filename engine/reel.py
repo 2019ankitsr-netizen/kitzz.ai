@@ -49,14 +49,18 @@ class Reel:
     def build_audio(self, cache_dir):
         os.makedirs(cache_dir, exist_ok=True)
         parts, t = [A.silence(self.lead)], self.lead
+        vmap = json.loads(os.environ.get("KITZZ_VOICE_MAP", "{}"))   # e.g. {"hf_alpha": "parler:Divya:calm"} re-voices a series
         for i, L in enumerate(self.lines):
             if L.pre: parts.append(A.silence(L.pre)); t += L.pre
             key = f"{cache_dir}/{self.name}_{i:02d}.wav"
-            meta = json.dumps([L.spk, L.say, L.speed, L.pitch + self.pitch, L.tone or self.tone, L.lang])
+            spk = vmap.get(L.spk, L.spk); nat = spk.startswith("parler:")
+            # natural voices carry their own pace and pitch: no speed-up or pitch shift on top
+            speed, pitch = (1.0, 0.0) if nat else (L.speed, L.pitch + self.pitch)
+            meta = json.dumps([spk, L.say, speed, pitch, L.tone or self.tone, L.lang])
             if os.path.exists(key) and open(key + ".json").read() == meta:
                 a, _ = sf.read(key, dtype="float32")
             else:
-                a = A.say(L.say, L.spk, L.speed, L.lang, L.pitch + self.pitch, L.tone or self.tone)
+                a = A.say(L.say, spk, speed, L.lang, pitch, L.tone or self.tone)
                 sf.write(key, a, A.SR); open(key + ".json", "w").write(meta)
             L.t0, L.t1 = t, t + len(a) / A.SR
             if L.sfx: self.events.append((max(0, t - 0.05), L.sfx))

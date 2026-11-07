@@ -76,7 +76,8 @@ def say(text, voice, speed=1.0, lang="en-us", pitch=0.0, tone="warm"):
     """One line. Long lines are split into short phrases (6-10 words) joined with comma pauses for a smoother read."""
     if voice.startswith("parler:"):
         _, spk, mood = (voice.split(":") + ["calm"])[:3]
-        a = say_parler(en_spoken(text) if lang.startswith("en") else text, spk, mood)
+        txt = en_spoken(text) if lang.startswith("en") else text.replace("ए आई", "एआई")   # Parler stretches "ए आई"; "एआई" reads as AI
+        a = say_parler(txt, spk, mood)
         if abs(speed - 1.0) > .01:
             import librosa; a = librosa.effects.time_stretch(a, rate=speed).astype(np.float32)
         return polish(a, pitch, tone)
