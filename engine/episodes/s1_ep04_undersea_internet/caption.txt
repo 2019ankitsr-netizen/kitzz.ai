@@ -1,0 +1,16 @@
+Your internet isn't in the cloud. It's lying on the ocean floor. 🌊
+
+Hit play on a video and here's the trip it takes:
+📱 Phone → nearest tower (the only wireless hop)
+💡 Tower → underground glass fibre, as pulses of light
+🏖️ Coast → a cable landing station, then straight into the sea
+🌍 Cables about as thick as a garden hose cross entire oceans
+🖥️ A data centre on the far shore sends your video all the way back
+
+Around 99% of data between continents travels this way. Satellites carry under 1%.
+
+Send this to the friend who thinks it's all satellites 🛰️
+
+#howitworks #internet #techexplained #didyouknow #kitzzai
+
+Keywords: how the internet works, undersea internet cables, submarine cables explained, where does the internet come from, is the internet in the cloud, fibre optic cable, cable landing station, how data travels

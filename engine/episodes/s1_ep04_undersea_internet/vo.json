@@ -1,0 +1,53 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Your internet isn't in the cloud. It's at the bottom of the ocean.",
+   "start": 0.35,
+   "end": 4.351
+  },
+  {
+   "key": "tower",
+   "text": "Hit play on a video, and your phone shouts the request to the nearest tower.",
+   "start": 4.671,
+   "end": 8.816
+  },
+  {
+   "key": "fibre",
+   "text": "From there, nothing is wireless. It dives underground into glass fibre, thin as a hair, as pulses of light.",
+   "start": 9.136,
+   "end": 16.125
+  },
+  {
+   "key": "coast",
+   "text": "That light races to the coast, and plunges straight into the sea.",
+   "start": 16.445,
+   "end": 20.098
+  },
+  {
+   "key": "ocean",
+   "text": "Cables no thicker than a garden hose cross entire oceans. About ninety nine percent of data between continents travels this way.",
+   "start": 20.418,
+   "end": 29.08
+  },
+  {
+   "key": "sat",
+   "text": "Satellites? Less than one percent.",
+   "start": 29.4,
+   "end": 31.516
+  },
+  {
+   "key": "dc",
+   "text": "On the far shore, a data centre grabs your video, and sends it all the way back. In about the blink of an eye.",
+   "start": 31.836,
+   "end": 38.652
+  },
+  {
+   "key": "cta",
+   "text": "Send this to the friend who thinks it's all satellites. Because, no.",
+   "start": 38.972,
+   "end": 42.71
+  }
+ ],
+ "total": 43.21
+}
