@@ -1,0 +1,71 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "An anar is a rocket that's not allowed to take off.",
+   "start": 0.35,
+   "end": 3.443
+  },
+  {
+   "key": "inside",
+   "text": "Inside the clay pot is a tightly packed powder. Fuel, plus a chemical that carries its own oxygen.",
+   "start": 3.743,
+   "end": 10.474
+  },
+  {
+   "key": "burn",
+   "text": "Light the top, and it burns downward, layer by layer, making a rush of hot gas.",
+   "start": 10.774,
+   "end": 15.866
+  },
+  {
+   "key": "jet",
+   "text": "The only way out is that tiny hole. So the gas shoots up as a jet, and pushes the pot into the ground.",
+   "start": 16.166,
+   "end": 22.716
+  },
+  {
+   "key": "sparks",
+   "text": "The sparks? Tiny bits of metal, like iron and aluminium, glowing white hot as they fly.",
+   "start": 23.016,
+   "end": 29.127
+  },
+  {
+   "key": "col0",
+   "text": "And the colours are metal salts.",
+   "start": 29.427,
+   "end": 31.196
+  },
+  {
+   "key": "red",
+   "text": "Strontium burns red.",
+   "start": 31.496,
+   "end": 33.02
+  },
+  {
+   "key": "green",
+   "text": "Barium, green.",
+   "start": 33.14,
+   "end": 34.165
+  },
+  {
+   "key": "blue",
+   "text": "Copper, blue.",
+   "start": 34.285,
+   "end": 35.195
+  },
+  {
+   "key": "bomb",
+   "text": "Trap that gas with no way out, and you get a bang instead.",
+   "start": 35.495,
+   "end": 39.116
+  },
+  {
+   "key": "cta",
+   "text": "Send this to whoever lights the anar at your place. Arm's length, always. Because remember,",
+   "start": 39.416,
+   "end": 45.014
+  }
+ ],
+ "total": 45.364
+}
