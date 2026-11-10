@@ -1,0 +1,92 @@
+<!doctype html><html lang="hi" data-resolution="portrait"><head><meta charset="UTF-8"/><title>Godhan Kutai</title><script src="gsap.min.js"></script>
+<style>
+@font-face{font-family:"Hind";src:url("fonts/Hind-Bold.ttf");font-weight:700}@font-face{font-family:"Yatra";src:url("fonts/YatraOne-Regular.ttf")}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#120810}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"Hind";color:#fff}
+svg.full{position:absolute;left:0;top:0}
+.sc{position:absolute;inset:0;opacity:0}
+.layer{position:absolute;inset:0;pointer-events:none}
+#rays{mix-blend-mode:screen;opacity:.0}
+.bk{filter:blur(14px);opacity:.0}
+#vig{background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.6) 100%)}
+#grain{background:url(grain.png);opacity:.10;mix-blend-mode:multiply}
+.cur{position:absolute;top:0;height:1920px;width:560px;background:repeating-linear-gradient(90deg,#7a0f1f 0 40px,#9b1c2c 40px 70px,#5e0a17 70px 110px);box-shadow:0 0 60px rgba(0,0,0,.7)}
+#curL{left:0;transform-origin:0 0}#curR{right:0;transform-origin:100% 0}
+#valance{position:absolute;left:0;top:0;width:1080px;height:150px;background:repeating-linear-gradient(90deg,#8a1424 0 60px,#6a0d1c 60px 120px);border-bottom:10px solid #d4a017;border-radius:0 0 40px 40px}
+#chrome{position:absolute;top:190px;left:50%;transform:translateX(-50%);background:#ffd166;color:#3a0b1a;font-weight:700;font-size:32px;padding:8px 28px;border-radius:40px;white-space:nowrap}
+.cap{position:absolute;left:80px;width:920px;top:1420px;text-align:center;font-weight:700;font-size:50px;line-height:1.3;opacity:0}
+.cap span{background:rgba(18,6,12,.84);padding:10px 26px;border-radius:24px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+</style></head><body>
+<div id="root" data-composition-id="gk" data-width="1080" data-height="1920" data-start="0" data-duration="{{DUR}}">
+<svg width="0" height="0" style="position:absolute"><defs>
+<filter id="pp" x="-30%" y="-30%" width="160%" height="160%"><feMorphology in="SourceAlpha" operator="dilate" radius="5" result="dil"/><feFlood flood-color="#fff4dc" result="w"/><feComposite in="w" in2="dil" operator="in" result="edge"/>
+<feGaussianBlur in="dil" stdDeviation="9" result="b"/><feOffset in="b" dx="12" dy="16" result="sh"/><feComponentTransfer in="sh" result="sh2"><feFuncA type="linear" slope=".5"/></feComponentTransfer>
+<feMerge><feMergeNode in="sh2"/><feMergeNode in="edge"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<linearGradient id="hell" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a0508"/><stop offset=".6" stop-color="#6a1010"/><stop offset="1" stop-color="#d9480f"/></linearGradient>
+<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1030"/><stop offset=".6" stop-color="#c2410c"/><stop offset="1" stop-color="#f6c46a"/></linearGradient>
+<pattern id="mud" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="3" fill="#6b4423"/><circle cx="22" cy="20" r="2" fill="#6b4423"/></pattern>
+</defs></svg>
+{{SCENES}}
+<svg class="layer full" width="1080" height="1920"><g id="rays">{{RAYS}}</g><g id="bokeh">{{BOKEH}}</g><g id="dust">{{DUST}}</g><g id="clouds">{{CLOUDS}}</g></svg>
+<div class="layer" id="vig"></div><div class="layer" id="grain"></div>
+<div id="chrome">लोककथा · भाई दूज · गोधन कुटाई</div>
+{{CAPS}}
+<div class="cur" id="curL"></div><div class="cur" id="curR"></div><div id="valance"></div>
+<script>
+(function(){
+const L={{LINES}}, D={{DUR}}, SC={{SC}}; const tl=gsap.timeline({paused:true});
+const s=i=>L[i].start, e=i=>L[i].end, kw=(i,f)=>s(i)+(e(i)-s(i))*f;
+L.forEach((l,i)=>{const el='#cap'+i; tl.fromTo(el,{opacity:0,y:14},{opacity:1,y:0,duration:.2},l.start-.05); tl.to(el,{opacity:0,duration:.15},l.end+.12);});
+// curtains: open fast (hook), close at end
+tl.fromTo('#curL',{scaleX:1},{scaleX:.12,duration:.9,ease:'power3.inOut'},0); tl.fromTo('#curR',{scaleX:1},{scaleX:.12,duration:.9,ease:'power3.inOut'},0);
+tl.to(['#curL','#curR'],{scaleX:.3,duration:1.2,ease:'power2.inOut'},s(13)+.3); tl.to(['#curL','#curR'],{scaleX:1,duration:.7,ease:'power2.in'},D-.9);
+tl.fromTo('#endc',{opacity:0,y:-60},{opacity:1,y:0,duration:.5,ease:'back.out(1.6)'},s(13)+.6);
+// ambient
+document.querySelectorAll('.cl').forEach((c,i)=>tl.fromTo(c,{rotation:-2.5},{rotation:2.5,duration:2.2+i*.4,yoyo:true,repeat:Math.ceil(D/2),ease:'sine.inOut'},i*.3));
+document.querySelectorAll('.bk').forEach((c,i)=>tl.fromTo(c,{opacity:.05,y:0},{opacity:.4,y:-60,duration:2+(i%5)*.5,yoyo:true,repeat:Math.ceil(D/2),ease:'sine.inOut'},(i%7)*.3));
+document.querySelectorAll('.du').forEach((c,i)=>tl.fromTo(c,{y:0,x:0,opacity:.2},{y:-260,x:(i%2?40:-40),opacity:.9,duration:5+(i%6),yoyo:true,repeat:Math.ceil(D/5),ease:'sine.inOut'},(i%9)*.4));
+document.querySelectorAll('.ff').forEach((c,i)=>tl.fromTo(c,{scaleY:1,transformOrigin:'50% 100%'},{scaleY:1.25,duration:.22+(i%4)*.06,yoyo:true,repeat:Math.ceil(D*4),ease:'sine.inOut'},i*.05));
+tl.fromTo('#rays',{opacity:.05},{opacity:.22,duration:3,yoyo:true,repeat:Math.ceil(D/3),ease:'sine.inOut'},0);
+// scenes: crossfade, push-in camera, layer parallax
+SC.forEach(([a,b],k)=>{const st=k?s(a)-.15:0, en=(k<SC.length-1)?s(SC[k+1][0])-.15:D+1, id='#s'+k;
+  if(k) tl.fromTo(id,{opacity:0},{opacity:1,duration:.45,ease:'power1.inOut'},st); else tl.set(id,{opacity:1},0);
+  tl.to(id,{opacity:0,duration:.45},en);
+  tl.fromTo(id+' .cam',{scale:1.0,svgOrigin:'540 960'},{scale:1.09,duration:en-st+.5,ease:'none'},st);
+  tl.fromTo(id+' .bg',{x:18},{x:-18,duration:en-st+.5,ease:'none'},st); tl.fromTo(id+' .fg',{x:-30},{x:30,duration:en-st+.5,ease:'none'},st);});
+// 0 hook
+tl.fromTo('#q',{opacity:0,scale:.6,svgOrigin:'540 520'},{opacity:1,scale:1,duration:.35,ease:'back.out(2)'},.5);
+tl.to('#q',{opacity:0,duration:.3},kw(1,.1)); tl.to('#thorn',{opacity:1,duration:.4},kw(1,.3));
+// 2 shadow grows
+tl.fromTo('#shadow',{opacity:0,scale:1},{opacity:.75,scale:1.5,svgOrigin:'820 1150',duration:e(3)-s(3),ease:'power1.in'},s(3)+.4);
+// 3 curse then yamraj
+tl.fromTo('#sparks',{opacity:0},{opacity:1,duration:.12,yoyo:true,repeat:9},s(4)+1.4);
+tl.to('#ym3',{opacity:1,duration:.5},s(5)-.2); tl.to('#lipsTag',{opacity:1,duration:.3},kw(5,.2)); tl.to('#heartTag',{opacity:1,duration:.3},kw(5,.65));
+tl.fromTo('#s3 .heart',{scale:1,transformOrigin:'50% 50%'},{scale:1.35,duration:.35,yoyo:true,repeat:5},kw(5,.6));
+// 4 wall falls, sister shields
+tl.fromTo('#wallR',{rotation:0,svgOrigin:'0 0'},{rotation:-58,duration:.55,ease:'power3.in'},kw(6,.25));
+tl.to('#sis4',{opacity:1,duration:.25},kw(6,.28)); tl.fromTo('#dust4',{opacity:0},{opacity:1,duration:.15},kw(6,.25)+.55); tl.to('#dust4',{opacity:0,y:-80,duration:1.4},kw(6,.25)+.8);
+tl.fromTo('#s4 .cam',{x:0},{x:14,duration:.05,yoyo:true,repeat:9},kw(6,.25)+.55);
+// 5 snake + aanchal, scorpions->flowers
+tl.fromTo('#snk',{x:-500,opacity:1},{x:0,opacity:1,duration:1.2,ease:'power2.out'},s(7)+.1);
+tl.fromTo(['#aanchal','#aanchal2'],{opacity:0,y:-400},{opacity:1,y:280,duration:.7,ease:'power2.out'},kw(7,.28)); tl.to('#snk',{opacity:0,duration:.3},kw(7,.32));
+tl.to('#thaliG',{opacity:.25,duration:.4},kw(7,.45)); tl.to(['#aanchal','#aanchal2'],{y:840,duration:.8},kw(7,.45)); tl.to('#bedG',{opacity:1,duration:.4},kw(7,.47));
+tl.set('.mg',{opacity:0,scale:.2},0); tl.to('.scp',{opacity:0,scale:.3,duration:.4,stagger:.15},kw(7,.82)); tl.to('.mg',{opacity:1,scale:1.1,duration:.4,stagger:.15,ease:'back.out(2)'},kw(7,.84));
+// 6 rays strong
+tl.to('#rays',{opacity:.5,duration:.4},s(8)); tl.to('#rays',{opacity:.15,duration:.6},e(8)+.2);
+// 7 items + musal pounds
+[0,1,2,3].forEach(i=>tl.fromTo('#it'+i,{opacity:0,y:-80},{opacity:1,y:0,duration:.3,ease:'bounce.out'},kw(9,.42+i*.1)));
+tl.fromTo('#musal',{y:0},{y:-140,duration:.4,ease:'power2.out'},kw(9,.78)); tl.to('#musal',{y:230,duration:.18,ease:'power4.in'},kw(9,.86));
+tl.to('#musal',{y:-120,duration:.3},kw(9,.86)+.25); tl.to('#musal',{y:230,duration:.16,ease:'power4.in'},kw(9,.86)+.6);
+tl.fromTo('#dust7',{opacity:0},{opacity:1,duration:.1},kw(9,.86)+.17); tl.to('#dust7',{opacity:0,y:-90,duration:1.2},kw(9,.86)+.3);
+tl.fromTo('#s7 .cam',{y:0},{y:16,duration:.05,yoyo:true,repeat:7},kw(9,.86)+.17); tl.fromTo('#gob',{scaleY:1,svgOrigin:'545 1150'},{scaleY:.55,duration:.15},kw(9,.86)+.18);
+// 8 threads snap, halo
+document.querySelectorAll('.thr').forEach((p,i)=>{tl.fromTo(p,{opacity:1},{opacity:0,y:(i%2?60:-60),duration:.4},kw(10,.2)+i*.06);});
+tl.to('#halo',{opacity:1,duration:.8},kw(10,.5));
+// 9 thorn
+tl.to('#thorn9',{opacity:1,duration:.5},kw(11,.55)); tl.fromTo('#spk9',{opacity:0,scale:.3,svgOrigin:'625 828'},{opacity:1,scale:2.2,duration:.3,yoyo:true,repeat:1},kw(11,.8));
+// 10 women pound in rhythm, map
+document.querySelectorAll('#s10 .fig').forEach((f,i)=>tl.fromTo(f,{y:0},{y:-24,duration:.3,yoyo:true,repeat:11,ease:'sine.inOut'},s(12)+i*.15));
+tl.fromTo('#map',{opacity:0,y:30},{opacity:1,y:0,duration:.4},kw(12,.45));
+window.__timelines=window.__timelines||{}; window.__timelines['gk']=tl;
+})();
+</script></div></body></html>
