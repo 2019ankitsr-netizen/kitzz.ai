@@ -1,0 +1,53 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "This QR code is torn. And it still works.",
+   "start": 0.15,
+   "end": 2.98
+  },
+  {
+   "key": "finder",
+   "text": "See these three big squares? They tell your phone where the corners are, so it reads the code from any angle.",
+   "start": 3.26,
+   "end": 9.295
+  },
+  {
+   "key": "bits",
+   "text": "Every tiny block is one bit. Black is a one. White is a zero.",
+   "start": 9.575,
+   "end": 13.74
+  },
+  {
+   "key": "backup",
+   "text": "But a big part of the code isn't your data at all. It's backup.",
+   "start": 14.02,
+   "end": 17.735
+  },
+  {
+   "key": "rs",
+   "text": "A bit of maths called Reed\u2013Solomon lets your phone use those extra blocks to rebuild the missing pieces.",
+   "start": 18.015,
+   "end": 24.406
+  },
+  {
+   "key": "thirty",
+   "text": "At the highest level, up to 30% of the code can be gone.",
+   "start": 24.686,
+   "end": 28.428
+  },
+  {
+   "key": "origin",
+   "text": "It was invented in Japan in 1994, to track car parts in factories.",
+   "start": 28.708,
+   "end": 34.242
+  },
+  {
+   "key": "cta",
+   "text": "Save this, and send it to the friend whose shop QR is falling apart. Because now you know.",
+   "start": 34.522,
+   "end": 39.852
+  }
+ ],
+ "total": 40.732
+}

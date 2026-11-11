@@ -1,0 +1,15 @@
+This QR code is torn. And it still pays. 📱
+
+Here's why:
+🔲 The 3 big squares are corner markers, so your phone can read the code from any angle
+⬛ Every tiny block is one bit: black = 1, white = 0
+🟧 A big part of the code isn't your data at all. It's backup
+🧮 A bit of maths called Reed–Solomon uses those backup blocks to rebuild missing pieces
+💪 At the highest level, up to 30% of a QR code can be missing and it still scans
+🏭 QR codes were invented in Japan in 1994 to track car parts in factories
+
+Save this, and send it to the friend whose shop QR is falling apart.
+
+#howitworks #qrcode #upi #techexplained #kitzzai
+
+Keywords: how QR code works, torn QR code still works, QR code error correction, Reed Solomon explained, UPI QR code, QR code finder patterns, who invented QR code, tech explained
