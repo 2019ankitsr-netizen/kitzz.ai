@@ -7,6 +7,8 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 sys.path.insert(0, '/home/claude/kitzz.ai/engine')
 W, H = 1080, 1920
 SAFE = (65, 269, 1015, 1248)
+CAP_Y = 1345          # captions sit low, under the subject (box ~1270-1420, left of the icon rail)
+CAP_MAX = 1440
 FD = '/usr/share/fonts/opentype/inter/'
 HD = '/home/claude/fonts/'
 def fnt(n, s):
@@ -81,7 +83,7 @@ class Comp:
         th = self.th; b = a+dur; k = win(t, a, b, 0.2, 0.25)
         if not k: return
         blink = 0.75+0.25*(0.5+0.5*math.cos((t-a)*2*math.pi*2.2)); s = eback(min(1, (t-a)/0.35))
-        bw, bh = int(780*min(s, 1.0)), int(120*s); x0 = 110+(780-bw)/2; y0 = 905+(120-bh)/2
+        bw, bh = int(780*min(s, 1.0)), int(120*s); x0 = 110+(780-bw)/2; y0 = 1110+(120-bh)/2
         dr.rounded_rectangle([x0, y0, x0+bw, y0+bh], int(60*s), fill=(*th['nudge_bg'], int(250*k*blink)))
         if s > 0.6:
             f = th['nudge_font'].font_variant(size=int(th['nudge_font'].size*s))
@@ -115,7 +117,7 @@ class Comp:
                 c0 = l['start']+dur*acc/tot; c1 = l['start']+dur*(acc+cl(c))/tot; acc += cl(c)
                 if not (c0-0.05 <= t <= (c1 if c is not chunks[-1] else l['end']+0.2)): continue
                 p = (t-c0)/max(0.01, c1-c0); nw = sum(len(w) for x in c for w in x); cut = p*nw
-                lh = th.get('cap_lh', 70); ytop = 1150-lh*len(c)/2
+                lh = th.get('cap_lh', 70); ytop = CAP_Y-lh*len(c)/2
                 widths = [dr.textlength(' '.join(x), font=F) for x in c]; mw = max(widths)
                 bx0 = max(120, W/2-mw/2-34); bx1 = min(920, W/2+mw/2+34)
                 dr.rounded_rectangle([bx0, ytop-14, bx1, ytop+lh*len(c)+10], 28, fill=(*th['cap_bg'], 205))
@@ -144,6 +146,9 @@ class Comp:
     def check(self):
         bad = []
         for lab, (x0, y0, x1, y1) in self.BOX:
+            if lab in ('caption', 'who'):
+                if x0 < 119 or x1 > 921 or y1 > CAP_MAX: bad.append(lab)
+                continue
             if x0 < SAFE[0]-1 or x1 > SAFE[2]+1 or y0 < SAFE[1]-1 or y1 > SAFE[3]+1: bad.append(lab)
             elif y1 > 900 and x1 > 921: bad.append('rail:'+lab)
         return bad

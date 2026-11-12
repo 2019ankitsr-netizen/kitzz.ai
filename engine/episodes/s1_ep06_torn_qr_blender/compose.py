@@ -86,7 +86,7 @@ def overlay(t):
     if k:
         blink = 0.75 + 0.25*(0.5+0.5*math.cos((t-a)*2*math.pi*2.2))
         s = eback(min(1, (t-a)/0.35))
-        bw, bh = int(760*s), int(120*s); x0 = 110 + (760-bw)/2; y0 = 905 + (120-bh)/2
+        bw, bh = int(760*s), int(120*s); x0 = 110 + (760-bw)/2; y0 = 1110 + (120-bh)/2
         d.rounded_rectangle([x0, y0, x0+bw, y0+bh], int(60*s), fill=(*AMBER, int(250*k*blink)))
         if s > 0.6:
             d.text((x0+bw/2, y0+bh/2), 'Send to your chai-wala ↗', font=fnt('InterDisplay-ExtraBold.otf', int(54*s)), fill=(*INK, int(255*k)), anchor='mm')
@@ -124,7 +124,7 @@ def overlay(t):
                 if c0-0.05 <= t <= (c1 if c is not chunks[-1] else l['end']+0.2):
                     rows = c
                     p = (t-c0)/max(0.01, c1-c0); nw = sum(len(x) for x in rows); cut = p*nw
-                    lh = 70; ytop = 1145 - lh*len(rows)/2
+                    lh = 70; ytop = 1345 - lh*len(rows)/2
                     widths = [d.textlength(' '.join(x), font=F_CAP) for x in rows]
                     mw = max(widths); bx0 = max(120, W/2-mw/2-34) - 0; bx1 = min(920, W/2+mw/2+34)
                     d.rounded_rectangle([bx0, ytop-14, bx1, ytop+lh*len(rows)+10], 28, fill=(*INK, 200))
@@ -154,6 +154,9 @@ def frame(t):
 def check():
     bad = []
     for lab, (x0, y0, x1, y1) in BOXES:
+        if lab == 'caption':
+            if x0 < 119 or x1 > 921 or y1 > 1440: bad.append((lab, (int(x0), int(y0), int(x1), int(y1))))
+            continue
         if x0 < SAFE[0]-1 or x1 > SAFE[2]+1 or y0 < SAFE[1]-1 or y1 > SAFE[3]+1: bad.append((lab, (int(x0), int(y0), int(x1), int(y1))))
         elif y1 > 900 and x1 > 921: bad.append(('rail:'+lab, (int(x0), int(y0), int(x1), int(y1))))
     return bad
