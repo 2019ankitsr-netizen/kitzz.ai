@@ -1,0 +1,68 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Next stop: Venus.",
+   "who": null,
+   "start": 0.1,
+   "end": 2.094
+  },
+  {
+   "key": "intro",
+   "text": "The brightest planet in our night sky.  And the hottest one in the solar system.",
+   "who": null,
+   "start": 2.344,
+   "end": 6.851
+  },
+  {
+   "key": "day",
+   "text": "FACT: Venus spins so slowly that one turn takes 243 Earth days. Longer than its whole year.",
+   "who": null,
+   "start": 7.131,
+   "end": 15.261
+  },
+  {
+   "key": "west",
+   "text": "FACT: It spins backwards. So the Sun rises in the west.",
+   "who": null,
+   "start": 15.541,
+   "end": 20.117
+  },
+  {
+   "key": "hot",
+   "text": "FACT: Its thick air traps the heat. The ground is around 465°C. Hot enough to melt lead.",
+   "who": null,
+   "start": 20.397,
+   "end": 28.491
+  },
+  {
+   "key": "press",
+   "text": "Standing there, the air would press on you like 900 metres of ocean.",
+   "who": null,
+   "start": 28.771,
+   "end": 33.103
+  },
+  {
+   "key": "imagine",
+   "text": "IMAGINE: a sunrise in the west, and about two months until sunset.",
+   "who": null,
+   "start": 33.383,
+   "end": 37.993
+  },
+  {
+   "key": "next",
+   "text": "Next stop: Jupiter.",
+   "who": null,
+   "start": 38.273,
+   "end": 40.278
+  },
+  {
+   "key": "cta",
+   "text": "Save this ride.  And tag who you'd send to Venus.",
+   "who": null,
+   "start": 40.478,
+   "end": 43.569
+  }
+ ],
+ "total": 44.269
+}

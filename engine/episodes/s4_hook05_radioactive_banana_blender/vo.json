@@ -1,0 +1,54 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Every banana you eat is radioactive.",
+   "who": null,
+   "start": 0.1,
+   "end": 2.383
+  },
+  {
+   "key": "why",
+   "text": "Bananas are full of potassium. And a tiny bit of natural potassium is radioactive. It's called potassium-40.",
+   "who": null,
+   "start": 2.583,
+   "end": 9.408
+  },
+  {
+   "key": "dose",
+   "text": "One banana gives you about 0.1 microsieverts.",
+   "who": null,
+   "start": 9.688,
+   "end": 12.931
+  },
+  {
+   "key": "xray",
+   "text": "A dental X-ray? About 50 bananas.",
+   "who": null,
+   "start": 13.311,
+   "end": 15.952
+  },
+  {
+   "key": "safe",
+   "text": "And it doesn't build up.  Your body keeps its potassium steady, and flushes out the extra.",
+   "who": null,
+   "start": 16.232,
+   "end": 20.986
+  },
+  {
+   "key": "unit",
+   "text": "Scientists even joke about it as a unit: the Banana Equivalent Dose.",
+   "who": null,
+   "start": 21.266,
+   "end": 25.418
+  },
+  {
+   "key": "cta",
+   "text": "Send this to the friend who eats three a day. Because remember…",
+   "who": null,
+   "start": 25.698,
+   "end": 29.073
+  }
+ ],
+ "total": 29.673
+}

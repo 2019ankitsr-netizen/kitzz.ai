@@ -1,0 +1,75 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "He pushed his car to a hotel. And instantly, he was bankrupt.",
+   "who": null,
+   "start": 0.1,
+   "end": 3.409
+  },
+  {
+   "key": "solved",
+   "text": "Case three, solved.",
+   "who": null,
+   "start": 3.659,
+   "end": 5.047
+  },
+  {
+   "key": "ans",
+   "text": "The surgeon was the boy's mother.  Most people picture a man.  That's the trap.",
+   "who": null,
+   "start": 5.247,
+   "end": 9.71
+  },
+  {
+   "key": "log",
+   "text": "CCTV log · Cam 02 · Hotel car park · 23:10",
+   "who": null,
+   "start": 9.99,
+   "end": 15.99
+  },
+  {
+   "key": "setup",
+   "text": "A man pushes his car, by hand, all the way to the front of a hotel.",
+   "who": null,
+   "start": 16.29,
+   "end": 20.38
+  },
+  {
+   "key": "stop",
+   "text": "He stops.  Looks at the owner.  And says:  I'm bankrupt.",
+   "who": null,
+   "start": 20.66,
+   "end": 24.61
+  },
+  {
+   "key": "ask",
+   "text": "No crash. No theft. No one else touched the car.  So what happened?",
+   "who": null,
+   "start": 24.89,
+   "end": 29.801
+  },
+  {
+   "key": "clue",
+   "text": "Clue.  The hotel is red.  And the whole town fits on a table.",
+   "who": null,
+   "start": 30.381,
+   "end": 34.33
+  },
+  {
+   "key": "cta",
+   "text": "Answer in the comments.  And send it to the friend who always wins at Business.",
+   "who": null,
+   "start": 34.61,
+   "end": 38.824
+  },
+  {
+   "key": "loop",
+   "text": "He pushed his car to a hotel.  Why?",
+   "who": null,
+   "start": 39.074,
+   "end": 41.474
+  }
+ ],
+ "total": 42.074
+}

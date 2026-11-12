@@ -1,0 +1,82 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Bablu ne poocha: Tara, tum sochti kaise ho?",
+   "who": null,
+   "start": 0.1,
+   "end": 2.991
+  },
+  {
+   "key": "t1",
+   "text": "Sach bataun? Main bas agla shabd andaaza lagaati hoon.",
+   "who": "TARA",
+   "start": 3.241,
+   "end": 6.647
+  },
+  {
+   "key": "b1",
+   "text": "Bas? Itna hi?",
+   "who": "BABLU",
+   "start": 6.927,
+   "end": 8.632
+  },
+  {
+   "key": "chai",
+   "text": "Jaise koi likhe 'chai ke saath'... toh agla shabd?",
+   "who": null,
+   "start": 8.912,
+   "end": 12.727
+  },
+  {
+   "key": "b2",
+   "text": "Biscuit!",
+   "who": "BABLU",
+   "start": 13.007,
+   "end": 13.728
+  },
+  {
+   "key": "t2",
+   "text": "Bilkul! Maine crore-on vaakya padhe hain. Toh mujhe pata hai, kaunsa shabd sabse zyada aata hai.",
+   "who": "TARA",
+   "start": 13.928,
+   "end": 20.085
+  },
+  {
+   "key": "chain",
+   "text": "Ek shabd chuna, phir agla, phir agla. Aise hi poora jawaab banta hai.",
+   "who": null,
+   "start": 20.365,
+   "end": 25.526
+  },
+  {
+   "key": "b3",
+   "text": "Toh agar padha hua hi galat ho?",
+   "who": "BABLU",
+   "start": 25.806,
+   "end": 27.859
+  },
+  {
+   "key": "t3",
+   "text": "Toh main bhi poore bharose se galat bol sakti hoon. Isliye zaroori baatein jaanch lena.",
+   "who": "TARA",
+   "start": 28.139,
+   "end": 33.102
+  },
+  {
+   "key": "cliff",
+   "text": "Par agle din, Tara ne Bablu ko ek aisi tasveer dikhayi, jo kabhi kheenchi hi nahi gayi thi.",
+   "who": null,
+   "start": 33.682,
+   "end": 39.626
+  },
+  {
+   "key": "cta",
+   "text": "Part 5 jald. Follow karo, aur ye us dost ko bhejo jo AI pe aankh band karke bharosa karta hai.",
+   "who": null,
+   "start": 39.906,
+   "end": 47.35
+  }
+ ],
+ "total": 48.05
+}
