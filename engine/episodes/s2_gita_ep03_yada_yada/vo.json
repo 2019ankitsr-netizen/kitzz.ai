@@ -1,0 +1,65 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Jab har taraf galat jeet raha ho, tab kya hota hai? Krishna ne khud bataya.",
+   "start": 0.3,
+   "end": 5.271
+  },
+  {
+   "key": "fear",
+   "text": "Arjun hairaan the. Krishna baar baar dharti par kyun aate hain?",
+   "start": 5.621,
+   "end": 9.714
+  },
+  {
+   "key": "krishna",
+   "text": "Krishna ka jawaab,",
+   "start": 10.064,
+   "end": 11.619
+  },
+  {
+   "key": "sh1",
+   "text": "यदा यदा हि धर्मस्य ग्लानिर्भवति भारत ।",
+   "start": 12.069,
+   "end": 16.43
+  },
+  {
+   "key": "sh2",
+   "text": "अभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम् ॥",
+   "start": 16.78,
+   "end": 21.386
+  },
+  {
+   "key": "mean1",
+   "text": "Yaani, he Bharat, jab jab dharm ghatta hai, aur adharm badhta hai,",
+   "start": 21.936,
+   "end": 26.739
+  },
+  {
+   "key": "mean2",
+   "text": "tab tab main khud prakat hota hoon.",
+   "start": 27.039,
+   "end": 29.527
+  },
+  {
+   "key": "today",
+   "text": "Aaj bhi, jab galat badhe aur sab chup rahein, andhera wahin badhta hai.",
+   "start": 29.927,
+   "end": 34.885
+  },
+  {
+   "key": "shoot",
+   "text": "Roshni ka intezaar mat karo. Ek diya tum jalao.",
+   "start": 35.235,
+   "end": 38.849
+  },
+  {
+   "key": "cta",
+   "text": "Jo galat ke saamne akela khada hai, use ye bhejo. Kyunki,",
+   "start": 39.349,
+   "end": 43.728
+  }
+ ],
+ "total": 44.078
+}
