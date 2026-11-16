@@ -1,0 +1,54 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Honey can last 3,000 years.",
+   "who": null,
+   "start": 0.1,
+   "end": 1.951
+  },
+  {
+   "key": "tomb",
+   "text": "Archaeologists found pots of it in ancient Egyptian tombs.  Still edible.",
+   "who": null,
+   "start": 2.151,
+   "end": 6.48
+  },
+  {
+   "key": "water",
+   "text": "Here's why. Honey is only about 17% water. Germs that land in it get the water sucked right out of them.",
+   "who": null,
+   "start": 6.76,
+   "end": 13.564
+  },
+  {
+   "key": "acid",
+   "text": "It's also acidic.  Roughly as sour as orange juice.",
+   "who": null,
+   "start": 13.895,
+   "end": 17.131
+  },
+  {
+   "key": "bee",
+   "text": "And bees add an enzyme that slowly makes hydrogen peroxide.  A built-in germ killer.",
+   "who": null,
+   "start": 17.411,
+   "end": 22.475
+  },
+  {
+   "key": "crystal",
+   "text": "So if your honey turns hard and cloudy? It hasn't gone bad. It's just crystallised. Warm the jar in hot water.",
+   "who": null,
+   "start": 22.755,
+   "end": 29.39
+  },
+  {
+   "key": "cta",
+   "text": "Send this to the friend who threw theirs away. Because remember…",
+   "who": null,
+   "start": 29.67,
+   "end": 33.129
+  }
+ ],
+ "total": 33.729
+}
