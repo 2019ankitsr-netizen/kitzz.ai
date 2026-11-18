@@ -40,6 +40,15 @@ def make_voice():
         f0, _, _ = librosa.pyin(a, fmin=60, fmax=400, sr=sr, frame_length=4096); f = f0[~np.isnan(f0)]
         return (float(np.median(f)) if len(f) else 0.0), librosa.feature.mfcc(y=a, sr=sr, n_mfcc=20).mean(1)
     ra, rsr = sf.read(f'{HERE}/assets/ref_hook.wav', dtype='float32'); ref = feats(ra, rsr)
+    from faster_whisper import WhisperModel
+    from scipy.signal import resample_poly
+    asr = WhisperModel('small', device='cpu', compute_type='int8')
+    def coverage(a, text):
+        """share of the script that the speech-to-text hears (catches skipped sentences)"""
+        b = resample_poly(a, 16000, SR).astype(np.float32)
+        heard = ''.join(x.text for x in asr.transcribe(b, language='hi')[0])
+        n = lambda t: re.sub(r'[\s,।॥?!.\-]', '', t)
+        return min(1.5, len(n(heard)) / max(1, len(n(text))))
     score = lambda f: abs(f[0] - ref[0]) / 10 + np.linalg.norm(f[1][1:] - ref[1][1:]) / 20
     rep = {}
     for k in KEYS:
@@ -47,12 +56,13 @@ def make_voice():
             a, sr = sf.read(f'{HERE}/assets/save.wav', dtype='float32'); sf.write(f'{OUT}/vo/save.wav', a, sr); continue
         if os.path.exists(f'{OUT}/vo/{k}.wav'): continue
         mood = MOOD.get(k, 'calm'); best = None
-        for seed in (7, 21, 33):
-            a = gen(DESC[mood], spoken(k), seed); f = feats(a, SR); sc = score(f)
-            if best is None or sc < best[0]: best = (sc, seed, a, f)
-            if abs(f[0] - ref[0]) < 9 and sc < 1.6: break
-        sc, seed, a, f = best
-        sf.write(f'{OUT}/vo/{k}.wav', a, SR); rep[k] = dict(seed=seed, f0=round(f[0], 1), score=round(float(sc), 2), dur=round(len(a) / SR, 2))
+        for seed in (7, 21, 33, 45, 58):
+            a = gen(DESC[mood], spoken(k), seed); f = feats(a, SR); cov = coverage(a, spoken(k))
+            sc = score(f) + (3 if cov < 0.78 else 0)
+            if best is None or sc < best[0]: best = (sc, seed, a, f, cov)
+            if abs(f[0] - ref[0]) < 11 and sc < 1.6: break
+        sc, seed, a, f, cov = best
+        sf.write(f'{OUT}/vo/{k}.wav', a, SR); rep[k] = dict(seed=seed, f0=round(f[0], 1), score=round(float(sc), 2), cov=round(cov, 2), dur=round(len(a) / SR, 2))
         print(k, rep[k], flush=True)
     json.dump(rep, open(f'{OUT}/vo/report.json', 'w'), indent=1)
 
