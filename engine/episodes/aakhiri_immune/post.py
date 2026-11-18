@@ -9,9 +9,9 @@ def breath(dur=0.45, inhale=True):
     return (x*e/np.abs(x).max()*0.05).astype(np.float32)
 ir_n=int(0.35*SR); ir=rng.normal(0,1,ir_n)*np.exp(-np.arange(ir_n)/SR*14); ir[0]=0; ir/=np.abs(ir).sum()*0.6
 hp=butter(2,90,btype='high',fs=SR,output='sos'); pres=butter(2,[2500,5000],btype='band',fs=SR,output='sos')
-BREATH_BEFORE={3:0.4,4:0.5,6:0.45,7:0.5,8:0.55}
-for i in range(1,9):
-    a,sr=sf.read(f'../xtts/pc_{i}.wav',dtype='float32'); a=resample_poly(a,SR,sr).astype(np.float32)
+BREATH_BEFORE={3:0.45,5:0.4,6:0.5,8:0.55}
+for i in [1,2,3,4,5,6,8]:
+    a,sr=sf.read(f'../xtts/e2_{i}.wav',dtype='float32'); a=resample_poly(a,SR,sr).astype(np.float32)
     # trim leading/trailing silence
     th=0.01*np.abs(a).max(); idx=np.where(np.abs(a)>th)[0]; a=a[max(0,idx[0]-1200):idx[-1]+4800]
     t=np.arange(len(a))/SR
@@ -24,5 +24,5 @@ for i in range(1,9):
     if i in BREATH_BEFORE:
         b=breath(BREATH_BEFORE[i]); lead=np.concatenate([b,np.zeros(int(0.08*SR),np.float32)])
     out=np.concatenate([lead,a.astype(np.float32)])
-    if i in (4,8): out=np.concatenate([out,breath(0.5,False)])
+    if i in (3,8): out=np.concatenate([out,breath(0.5,False)])
     sf.write(f'vo2/{i}_48.wav',out,SR,subtype='PCM_16'); print(i,round(len(out)/SR,2))
