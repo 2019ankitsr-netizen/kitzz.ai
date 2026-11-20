@@ -1,0 +1,59 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Your earbuds make noise, to give you silence.",
+   "start": 0.12,
+   "end": 2.646
+  },
+  {
+   "key": "mic",
+   "text": "A tiny mic on the outside listens to the world. Like this engine hum.",
+   "start": 2.906,
+   "end": 7.323
+  },
+  {
+   "key": "flip",
+   "text": "A chip flips that sound wave upside down. Every peak becomes a dip.",
+   "start": 7.583,
+   "end": 11.9
+  },
+  {
+   "key": "cancel",
+   "text": "Play both together, and they cancel out. Peak plus dip, equals flat. Silence.",
+   "start": 12.16,
+   "end": 17.16
+  },
+  {
+   "key": "fast",
+   "text": "It redoes this thousands of times a second. Even a tiny delay, and it stops working.",
+   "start": 17.42,
+   "end": 22.561
+  },
+  {
+   "key": "inside",
+   "text": "A second mic inside your ear checks what's left, and fixes it.",
+   "start": 22.821,
+   "end": 26.408
+  },
+  {
+   "key": "low",
+   "text": "That's why it kills the plane hum, but you still hear voices. High, sharp sounds are blocked by the ear tip instead.",
+   "start": 26.668,
+   "end": 33.756
+  },
+  {
+   "key": "origin",
+   "text": "The idea was patented in 1936. Decades later, it went into headsets for pilots.",
+   "start": 34.016,
+   "end": 40.541
+  },
+  {
+   "key": "cta",
+   "text": "Send this to the friend who never takes their earbuds out. Because now you know, your earbuds make noise.",
+   "start": 40.801,
+   "end": 46.921
+  }
+ ],
+ "total": 47.681
+}

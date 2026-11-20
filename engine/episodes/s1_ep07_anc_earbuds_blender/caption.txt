@@ -1,0 +1,16 @@
+Your earbuds make noise to give you silence. 🎧
+
+Here's how noise cancelling works:
+🎤 A tiny mic on the outside listens to the sound around you, like an engine hum
+🔄 A chip flips that sound wave upside down, so every peak becomes a dip
+➕ Play both together and they cancel out: peak + dip = flat = silence
+⚡ It redoes this thousands of times a second. Even a tiny delay and noise leaks through
+👂 A second mic inside your ear checks what's left and fixes it
+✈️ It works best on low, steady hums (planes, buses, ACs). High, sharp sounds like voices are mostly blocked by the silicone ear tip
+📜 The idea was patented in 1936, and decades later it went into headsets for pilots
+
+Send this to the friend who never takes their earbuds out.
+
+#howitworks #noisecancelling #earbuds #techexplained #kitzzai
+
+Keywords: how noise cancelling works, active noise cancellation explained, ANC earbuds, how ANC works, noise cancelling headphones, sound wave cancellation, destructive interference, tech explained
