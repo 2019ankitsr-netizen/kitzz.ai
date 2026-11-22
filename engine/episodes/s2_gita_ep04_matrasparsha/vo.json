@@ -1,0 +1,65 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Kuch bhi hamesha nahi rehta. Na sukh, na dukh. Krishna ne khud bataya.",
+   "start": 0.3,
+   "end": 5.072
+  },
+  {
+   "key": "fear",
+   "text": "Arjun ka dil toota tha. Har taraf dard, har taraf dukh.",
+   "start": 5.422,
+   "end": 9.228
+  },
+  {
+   "key": "krishna",
+   "text": "Krishna muskuraaye, aur bole,",
+   "start": 9.578,
+   "end": 11.763
+  },
+  {
+   "key": "sh1",
+   "text": "मात्रास्पर्शास्तु कौन्तेय शीतोष्णसुखदुःखदाः ।",
+   "start": 12.213,
+   "end": 17.142
+  },
+  {
+   "key": "sh2",
+   "text": "आगमापायिनोऽनित्यास्तांस्तितिक्षस्व भारत ॥",
+   "start": 17.492,
+   "end": 21.71
+  },
+  {
+   "key": "mean1",
+   "text": "Yaani, he Kaunteya, sardi garmi, sukh dukh, ye sab aate hain, aur chale jaate hain.",
+   "start": 22.26,
+   "end": 28.219
+  },
+  {
+   "key": "mean2",
+   "text": "Ye tikte nahi. Inhe sehna seekho, he Bharat.",
+   "start": 28.519,
+   "end": 31.932
+  },
+  {
+   "key": "today",
+   "text": "Fail result, toota dil, bura din. Mausam ki tarah, ye bhi badlega.",
+   "start": 32.332,
+   "end": 37.254
+  },
+  {
+   "key": "shoot",
+   "text": "Toofan mein ruko mat. Chalte raho, subah zaroor aayegi.",
+   "start": 37.604,
+   "end": 41.388
+  },
+  {
+   "key": "cta",
+   "text": "Jo abhi mushkil waqt se guzar raha hai, use ye bhejo. Kyunki,",
+   "start": 41.888,
+   "end": 46.374
+  }
+ ],
+ "total": 46.724
+}
