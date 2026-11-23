@@ -1,0 +1,59 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Your phone can't feel your finger. It feels your electricity.",
+   "start": 0.12,
+   "end": 3.631
+  },
+  {
+   "key": "grid",
+   "text": "Under the glass is a grid of see-through wires. Rows one way, columns the other.",
+   "start": 3.891,
+   "end": 8.585
+  },
+  {
+   "key": "field",
+   "text": "Every crossing point holds a tiny electric charge.",
+   "start": 8.845,
+   "end": 11.92
+  },
+  {
+   "key": "touch",
+   "text": "Your body conducts electricity. So your finger pulls a little charge away from the crossings under it.",
+   "start": 12.18,
+   "end": 18.026
+  },
+  {
+   "key": "scan",
+   "text": "A chip checks every crossing over a hundred times a second, and finds where the charge dropped. That's your tap.",
+   "start": 18.286,
+   "end": 24.722
+  },
+  {
+   "key": "swipe",
+   "text": "Move your finger, and the dip moves too. Two dips? Pinch to zoom.",
+   "start": 24.982,
+   "end": 28.783
+  },
+  {
+   "key": "glove",
+   "text": "That's why normal gloves don't work. But a sausage does. It conducts, just like you.",
+   "start": 29.043,
+   "end": 34.346
+  },
+  {
+   "key": "origin",
+   "text": "This kind of touchscreen was invented in England in 1965, and first used for air traffic control.",
+   "start": 34.606,
+   "end": 41.84
+  },
+  {
+   "key": "cta",
+   "text": "Send this to the friend who taps harder when the screen doesn't respond. Because your phone can't feel your finger.",
+   "start": 42.1,
+   "end": 48.456
+  }
+ ],
+ "total": 49.216
+}

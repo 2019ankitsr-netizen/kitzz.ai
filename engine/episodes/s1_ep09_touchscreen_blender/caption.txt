@@ -1,0 +1,16 @@
+Your phone can't feel your finger. It feels your electricity. 📱
+
+Here's how a touchscreen actually works:
+🔲 Under the glass is a grid of see-through wires, rows one way and columns the other
+⚡ Every crossing point holds a tiny electric charge
+👆 Your body conducts electricity, so your finger pulls a little charge away from the crossings under it
+🔍 A chip checks every crossing over a hundred times a second and finds where the charge dropped. That's your tap
+↔️ Move your finger and the dip moves too. Two dips? Pinch to zoom
+🧤 That's why normal gloves don't work. But a sausage does, because it conducts just like you
+📜 This kind of touchscreen was invented in England in 1965 and first used for air traffic control
+
+Send this to the friend who taps harder when the screen doesn't respond.
+
+#howitworks #touchscreen #smartphone #techexplained #kitzzai
+
+Keywords: how touchscreen works, capacitive touchscreen explained, how phone screen detects touch, why gloves don't work on phone, sausage touchscreen, how pinch to zoom works, smartphone tech explained, tech facts
