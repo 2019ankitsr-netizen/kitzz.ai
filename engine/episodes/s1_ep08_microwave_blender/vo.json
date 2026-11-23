@@ -1,0 +1,59 @@
+{
+ "lines": [
+  {
+   "key": "hook",
+   "text": "Your microwave never heats your food. Your food heats itself.",
+   "start": 0.12,
+   "end": 4.014
+  },
+  {
+   "key": "mol",
+   "text": "Food is full of water. Each water molecule has a plus end and a minus end, like a tiny magnet.",
+   "start": 4.274,
+   "end": 10.697
+  },
+  {
+   "key": "mag",
+   "text": "A part called a magnetron fires invisible microwaves.",
+   "start": 10.957,
+   "end": 14.811
+  },
+  {
+   "key": "flip",
+   "text": "Their field flips 2.45 billion times a second, and the water keeps twisting to line up.",
+   "start": 15.071,
+   "end": 20.927
+  },
+  {
+   "key": "heat",
+   "text": "All that twisting jostles everything around it. That jostling is heat.",
+   "start": 21.187,
+   "end": 25.565
+  },
+  {
+   "key": "spin",
+   "text": "The waves leave hot and cold spots. That's why the plate spins.",
+   "start": 25.825,
+   "end": 29.964
+  },
+  {
+   "key": "metal",
+   "text": "Metal bounces the waves back, and sharp edges can spark. Keep the spoon out.",
+   "start": 30.224,
+   "end": 34.862
+  },
+  {
+   "key": "origin",
+   "text": "In 1945, engineer Percy Spencer stood next to a radar magnetron, and the chocolate bar in his pocket melted.",
+   "start": 35.122,
+   "end": 43.31
+  },
+  {
+   "key": "cta",
+   "text": "Send this to the friend who reheats their chai five times a day. Because your microwave never heats your food.",
+   "start": 43.57,
+   "end": 50.248
+  }
+ ],
+ "total": 51.008
+}
