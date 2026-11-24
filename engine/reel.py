@@ -62,6 +62,9 @@ class Reel:
             else:
                 a = A.say(L.say, spk, speed, L.lang, pitch, L.tone or self.tone)
                 sf.write(key, a, A.SR); open(key + ".json", "w").write(meta)
+            ns = getattr(self, "nat_speed", 1.0)          # optional pace-up of natural (Parler) voices, applied after the cache
+            if nat and abs(ns - 1.0) > .01:
+                import librosa; a = librosa.effects.time_stretch(a, rate=ns).astype(np.float32)
             L.t0, L.t1 = t, t + len(a) / A.SR
             if L.sfx: self.events.append((max(0, t - 0.05), L.sfx))
             parts += [a, A.silence(L.gap)]; t = L.t1 + L.gap
