@@ -1,0 +1,79 @@
+{
+ "lines": [
+  {
+   "id": "hook",
+   "tts": "कुकर की सीटी आख़िर बजती क्यों है? चलो, इसे खोल के देखते हैं।",
+   "cap": "Cooker ki seeti aakhir bajti kyun hai? Chalo, khol ke dekhte hain.",
+   "dur": 3.92,
+   "start": 0.15
+  },
+  {
+   "id": "parts",
+   "tts": "बॉडी, ढक्कन, और ये रबर का गैस्केट। ये भाप को बाहर निकलने ही नहीं देता।",
+   "cap": "Body, dhakkan, aur yeh rubber gasket. Yeh bhaap ko bahar nikalne hi nahi deta.",
+   "dur": 4.83,
+   "start": 4.42
+  },
+  {
+   "id": "pressure",
+   "tts": "भाप फँसती है, तो अंदर का प्रेशर बढ़ता है... करीब एक बार ज़्यादा। यानी बाहर की हवा से लगभग दोगुना।",
+   "cap": "Bhaap fasti hai, pressure badhta hai… bahar ki hawa se lagbhag doguna.",
+   "dur": 6.89,
+   "start": 9.6
+  },
+  {
+   "id": "boil",
+   "tts": "और इतने प्रेशर पर, पानी सौ नहीं... एक सौ इक्कीस डिग्री पर उबलता है।",
+   "cap": "Itne pressure par paani 100 nahi… 121°C par ubalta hai.",
+   "dur": 4.32,
+   "start": 16.84
+  },
+  {
+   "id": "fast",
+   "tts": "ज़्यादा गर्मी, मतलब दाल लगभग तीन गुना जल्दी पकती है।",
+   "cap": "Zyada garmi = daal lagbhag 3 guna jaldi pakti hai.",
+   "dur": 3.77,
+   "start": 21.51
+  },
+  {
+   "id": "whistle",
+   "tts": "और सीटी? वो असल में एक वज़न है। प्रेशर इतना हो जाए कि उसे उठा दे... तो भाप निकलती है, और... सीटी!",
+   "cap": "Aur seeti? Woh asal mein ek wazan hai. Pressure use utha de… phisss — seeti!",
+   "dur": 6.3,
+   "start": 25.78
+  },
+  {
+   "id": "safety",
+   "tts": "अगर सीटी अटक जाए, तो ये सेफ़्टी वाल्व बैकअप है। ज़्यादा प्रेशर पर ये खुल जाता है।",
+   "cap": "Seeti atak jaye? Yeh safety valve backup hai — zyada pressure par khul jata hai.",
+   "dur": 5.22,
+   "start": 32.43
+  },
+  {
+   "id": "cta",
+   "tts": "ये मम्मी को भेजो, और पूछो... आज कितनी सीटी?",
+   "cap": "Mummy ko bhejo aur poocho… aaj kitni seeti?",
+   "dur": 2.91,
+   "start": 38.15
+  },
+  {
+   "id": "loop",
+   "tts": "पर पहले ये बताओ...",
+   "cap": "Par pehle yeh batao…",
+   "dur": 1.33,
+   "start": 41.36
+  }
+ ],
+ "S": {
+  "hook": 0.15,
+  "parts": 4.42,
+  "pressure": 9.6,
+  "boil": 16.84,
+  "fast": 21.51,
+  "whistle": 25.78,
+  "safety": 32.43,
+  "cta": 38.15,
+  "loop": 41.36
+ },
+ "end": 43.09
+}

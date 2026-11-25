@@ -1,0 +1,11 @@
+[
+{"id":"hook","tts":"कुकर की सीटी आख़िर बजती क्यों है? चलो, इसे खोल के देखते हैं।","cap":"Cooker ki seeti aakhir bajti kyun hai? Chalo, khol ke dekhte hain."},
+{"id":"parts","tts":"बॉडी, ढक्कन, और ये रबर का गैस्केट। ये भाप को बाहर निकलने ही नहीं देता।","cap":"Body, dhakkan, aur yeh rubber gasket. Yeh bhaap ko bahar nikalne hi nahi deta."},
+{"id":"pressure","tts":"भाप फँसती है, तो अंदर का प्रेशर बढ़ता है... करीब एक बार ज़्यादा। यानी बाहर की हवा से लगभग दोगुना।","cap":"Bhaap fasti hai, pressure badhta hai… bahar ki hawa se lagbhag doguna."},
+{"id":"boil","tts":"और इतने प्रेशर पर, पानी सौ नहीं... एक सौ इक्कीस डिग्री पर उबलता है।","cap":"Itne pressure par paani 100 nahi… 121°C par ubalta hai."},
+{"id":"fast","tts":"ज़्यादा गर्मी, मतलब दाल लगभग तीन गुना जल्दी पकती है।","cap":"Zyada garmi = daal lagbhag 3 guna jaldi pakti hai."},
+{"id":"whistle","tts":"और सीटी? वो असल में एक वज़न है। प्रेशर इतना हो जाए कि उसे उठा दे... तो भाप निकलती है, और... सीटी!","cap":"Aur seeti? Woh asal mein ek wazan hai. Pressure use utha de… phisss — seeti!"},
+{"id":"safety","tts":"अगर सीटी अटक जाए, तो ये सेफ़्टी वाल्व बैकअप है। ज़्यादा प्रेशर पर ये खुल जाता है।","cap":"Seeti atak jaye? Yeh safety valve backup hai — zyada pressure par khul jata hai."},
+{"id":"cta","tts":"ये मम्मी को भेजो, और पूछो... आज कितनी सीटी?","cap":"Mummy ko bhejo aur poocho… aaj kitni seeti?"},
+{"id":"loop","tts":"पर पहले ये बताओ...","cap":"Par pehle yeh batao…"}
+]

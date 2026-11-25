@@ -1,0 +1,95 @@
+{
+ "lines": [
+  {
+   "id": "hook",
+   "tts": "अगर सूरज एक फुटबॉल होता... तो धरती कहाँ होती?",
+   "cap": "Agar Sooraj ek football hota… toh Dharti kahan hoti?",
+   "dur": 3.53,
+   "start": 0.15
+  },
+  {
+   "id": "sun",
+   "tts": "इस फुटबॉल को वानखेड़े की पिच के बीच में रखो। बाईस सेंटीमीटर।",
+   "cap": "Wankhede ki pitch ke beech rakho. 22 cm.",
+   "dur": 4.75,
+   "start": 4.03
+  },
+  {
+   "id": "earth",
+   "tts": "अब धरती... सिर्फ़ दो मिलीमीटर। राई का एक दाना।",
+   "cap": "Ab Dharti… sirf 2 mm. Raai ka ek daana.",
+   "dur": 3.45,
+   "start": 9.13
+  },
+  {
+   "id": "dist",
+   "tts": "और ये दाना पड़ा है, तेईस मीटर दूर। थर्टी-यार्ड सर्कल के ठीक अंदर।",
+   "cap": "Aur yeh daana 23 metre door. 30-yard circle ke theek andar.",
+   "dur": 4.7,
+   "start": 12.93
+  },
+  {
+   "id": "moon",
+   "tts": "चाँद? रेत का एक कण। धरती से बस छह सेंटीमीटर।",
+   "cap": "Chaand? Ret ka ek kan. Dharti se bas 6 cm.",
+   "dur": 3.71,
+   "start": 17.98
+  },
+  {
+   "id": "jup",
+   "tts": "जुपिटर, एक कंचा। एक सौ तेईस मीटर दूर, यानी स्टेडियम के बाहर।",
+   "cap": "Jupiter = ek kancha. 123 m door… stadium ke bahar.",
+   "dur": 4.85,
+   "start": 22.04
+  },
+  {
+   "id": "nep",
+   "tts": "नेपच्यून? पूरे सात सौ मीटर।",
+   "cap": "Neptune? Poore 700 metre.",
+   "dur": 2.12,
+   "start": 27.24
+  },
+  {
+   "id": "star",
+   "tts": "और सबसे पास वाला अगला तारा? एक और फुटबॉल... छह हज़ार किलोमीटर से भी ज़्यादा दूर।",
+   "cap": "Aur agla sabse paas ka taara? Ek aur football… 6,000+ km door.",
+   "dur": 6.37,
+   "start": 30.06
+  },
+  {
+   "id": "dark",
+   "tts": "बीच में? बस अँधेरा।",
+   "cap": "Beech mein? Bas andhera.",
+   "dur": 1.68,
+   "start": 36.93
+  },
+  {
+   "id": "cta",
+   "tts": "ये उस दोस्त को भेजो, जो कहता है स्पेस छोटा है।",
+   "cap": "Bhejo us dost ko jo kehta hai space chhota hai.",
+   "dur": 3.59,
+   "start": 39.11
+  },
+  {
+   "id": "loop",
+   "tts": "फिर से देखो...",
+   "cap": "Phir se dekho…",
+   "dur": 1.19,
+   "start": 43.0
+  }
+ ],
+ "S": {
+  "hook": 0.15,
+  "sun": 4.03,
+  "earth": 9.13,
+  "dist": 12.93,
+  "moon": 17.98,
+  "jup": 22.04,
+  "nep": 27.24,
+  "star": 30.06,
+  "dark": 36.93,
+  "cta": 39.11,
+  "loop": 43.0
+ },
+ "end": 44.59
+}

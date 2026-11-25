@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:IB;src:url(fonts/Inter-Black.otf)}
+@font-face{font-family:IX;src:url(fonts/Inter-ExtraBold.otf)}
+@font-face{font-family:IBo;src:url(fonts/Inter-Bold.otf)}
+@font-face{font-family:IS;src:url(fonts/Inter-SemiBold.otf)}
+@font-face{font-family:MONO;src:url(fonts/DejaVuSansMono-Bold.ttf)}
+html,body{margin:0;width:1080px;height:1920px;background:#000;overflow:hidden}
+canvas{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#ui{position:absolute;inset:0;pointer-events:none}
+.abs{position:absolute}
+#tag{left:65px;top:285px;font:40px MONO;color:#FF9933;letter-spacing:4px;background:rgba(5,6,10,.7);padding:6px 14px;border-radius:8px}
+#tag b{color:#fff;font-weight:normal}
+#big{left:65px;top:370px;width:950px}
+#bigLabel{font:44px MONO;color:#FF9933;letter-spacing:3px;text-shadow:0 2px 8px #000,0 0 20px #000;margin-top:20px}
+#bigNum{font:150px/1.0 IB;color:#fff;letter-spacing:-4px;text-shadow:0 6px 30px rgba(0,0,0,.9);margin-top:10px;white-space:nowrap}
+#bigNum small{font:64px IX;letter-spacing:0;color:#ffd7a8;margin-left:14px}
+#bigSub{font:52px IX;color:#fff;margin-top:14px;text-shadow:0 3px 14px #000}
+#cap{left:120px;width:800px;top:1060px;height:170px;display:flex;align-items:center;justify-content:center}
+#capIn{background:rgba(8,9,14,.82);border:2px solid rgba(255,153,51,.55);border-radius:26px;padding:16px 30px;font:52px/1.18 IX;color:#fff;text-align:center;max-width:740px}
+#capIn em{font-style:normal;color:#FFB15C}
+.hud{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px}
+.hud i{position:absolute;width:30px;height:30px;border:5px solid #FF9933}
+.hud i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}
+.hud i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}
+.hud i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}
+.hud i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+.hud span{position:absolute;left:135px;top:22px;white-space:nowrap;font:44px MONO;color:#fff;background:rgba(5,6,10,.75);padding:6px 14px;border-left:6px solid #FF9933}
+.hud.left span{left:auto;right:135px;border-left:0;border-right:6px solid #FF9933}
+#chip{left:540px;top:800px;transform:translateX(-50%);background:#FF9933;color:#111;font:48px IX;padding:18px 34px;border-radius:60px;white-space:nowrap;box-shadow:0 8px 30px rgba(255,153,51,.45)}
+#cta{left:90px;top:560px;width:830px;padding:44px 40px;border-radius:40px;background:rgba(14,15,22,.92);border:4px solid #FF9933;text-align:center}
+#cta .a{font:84px/1.05 IB;color:#fff}
+#cta .b{font:54px/1.2 IX;color:#FFB15C;margin-top:18px}
+#cta svg{display:block;margin:0 auto 20px}
+#black{inset:0;background:#000}
+</style></head>
+<body>
+<canvas id="c1"></canvas><canvas id="c2"></canvas>
+<div id="ui">
+ <div id="tag" class="abs">SCALE ON <b>· EP 01</b></div>
+ <div id="big" class="abs"><div id="bigLabel"></div><div id="bigNum"></div><div id="bigSub"></div></div>
+ <div id="hudA" class="hud"><i></i><i></i><i></i><i></i><span></span></div>
+ <div id="hudB" class="hud"><i></i><i></i><i></i><i></i><span></span></div>
+ <div id="chip" class="abs">Save karo · baad mein dost ko dikhana</div>
+ <div id="cta" class="abs">
+  <svg id="plane" width="150" height="120" viewBox="0 0 150 120"><path d="M8 58 L142 8 L104 112 L72 74 Z" fill="#FF9933"/><path d="M72 74 L142 8 L60 66 Z" fill="#c96a12"/></svg>
+  <div class="a">Bhejo us dost ko</div>
+  <div class="b">jo kehta hai "space chhota hai"</div>
+ </div>
+ <div id="cap" class="abs"><div id="capIn"></div></div>
+ <div id="black" class="abs"></div>
+</div>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+const TL = await (await fetch('timeline.json')).json();
+const S = TL.S, END = TL.end;
+const W=1080,H=1920;
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const ease=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const ramp=(t,a,b)=>ease((t-a)/(b-a));
+const win=(t,a,b,f=.35)=>Math.min(ramp(t,a,a+f),1-ramp(t,b-f,b)); // fade in/out window
+const lerp=(a,b,k)=>a+(b-a)*k;
+
+// ---------- renderers
+function mkR(id){const r=new THREE.WebGLRenderer({canvas:$(id),antialias:true,logarithmicDepthBuffer:true,preserveDrawingBuffer:true});r.setSize(W,H,false);r.setPixelRatio(1);r.outputColorSpace=THREE.SRGBColorSpace;r.toneMapping=THREE.ACESFilmicToneMapping;return r}
+const R1=mkR('c1'), R2=mkR('c2');
+const tl=new THREE.TextureLoader();
+const loadTex=u=>new Promise(res=>tl.load(u,t=>{t.colorSpace=THREE.SRGBColorSpace;res(t)}));
+const [earthTex,lightsTex,moonTex]=await Promise.all(['tex/earth_atmos_2048.jpg','tex/earth_lights_2048.png','tex/moon_1024.jpg'].map(loadTex));
+
+function canvasTex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t}
+const glowTex=canvasTex(256,256,(g,w)=>{const gr=g.createRadialGradient(128,128,0,128,128,128);gr.addColorStop(0,'rgba(255,220,160,1)');gr.addColorStop(.18,'rgba(255,160,60,.8)');gr.addColorStop(.5,'rgba(255,110,20,.18)');gr.addColorStop(1,'rgba(255,90,0,0)');g.fillStyle=gr;g.fillRect(0,0,256,256)});
+const dotTex=canvasTex(64,64,(g)=>{const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.4,'rgba(255,255,255,.6)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,64,64)});
+function glow(size,color=0xffffff,op=1){const m=new THREE.SpriteMaterial({map:glowTex,color,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false});const s=new THREE.Sprite(m);s.scale.set(size,size,1);return s}
+
+// seeded random
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+
+// ================= STADIUM SCENE (1 unit = 1 m)
+const sc=new THREE.Scene(); sc.background=new THREE.Color(0x030409);
+const cam=new THREE.PerspectiveCamera(40,W/H,0.0001,20000);
+sc.add(new THREE.HemisphereLight(0xa8b8ff,0x1a2a14,1.3));
+const flood=new THREE.DirectionalLight(0xdfe8ff,1.8);flood.position.set(-60,120,40);sc.add(flood);
+const sunLight=new THREE.PointLight(0xffa040,6,0,0);sunLight.position.set(0,0.11,0);sc.add(sunLight);
+
+// ground grid (hairline, city scale)
+const grid=new THREE.GridHelper(6000,300,0x1c2230,0x10141d);grid.position.y=-0.05;sc.add(grid);
+const baseMat=new THREE.MeshStandardMaterial({color:0x05070b,roughness:1});
+const base=new THREE.Mesh(new THREE.PlaneGeometry(8000,8000),baseMat);base.rotation.x=-Math.PI/2;base.position.y=-0.1;sc.add(base);
+// field
+const fieldTex=canvasTex(1024,1024,(g,w)=>{for(let i=0;i<16;i++){g.fillStyle=i%2?'#1f6a33':'#1a5c2c';g.fillRect(i*w/16,0,w/16,w)}});
+const field=new THREE.Mesh(new THREE.CircleGeometry(72,128),new THREE.MeshStandardMaterial({map:fieldTex,roughness:.95}));field.rotation.x=-Math.PI/2;sc.add(field);
+// pitch
+const pitchTex=canvasTex(128,840,(g,w,h)=>{g.fillStyle='#b89c66';g.fillRect(0,0,w,h);for(let i=0;i<400;i++){g.fillStyle=`rgba(90,70,40,${rnd()*.15})`;g.fillRect(rnd()*w,rnd()*h,3,3)}g.fillStyle='#f4f0e6';[[0.06],[0.94]].forEach(([p])=>{g.fillRect(0,p*h,w,4)});g.fillRect(0,0.02*h,w,3);g.fillRect(0,0.98*h,w,3)});
+const pitch=new THREE.Mesh(new THREE.PlaneGeometry(3.05,22),new THREE.MeshStandardMaterial({map:pitchTex,roughness:1}));pitch.rotation.x=-Math.PI/2;pitch.position.y=0.002;sc.add(pitch);
+// stumps
+for(const z of [-10.06,10.06])for(const x of [-0.115,0,0.115]){const s=new THREE.Mesh(new THREE.CylinderGeometry(0.018,0.018,0.71,8),new THREE.MeshStandardMaterial({color:0xf2efe6}));s.position.set(x,0.355,z);sc.add(s)}
+// line helper
+function lineLoop(pts,color,op){const g=new THREE.BufferGeometry().setFromPoints(pts);const m=new THREE.LineBasicMaterial({color,transparent:true,opacity:op});const l=new THREE.LineLoop(g,m);return l}
+function circle(r,y,color,op,n=256){const p=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2;p.push(new THREE.Vector3(Math.cos(a)*r,y,Math.sin(a)*r))}return lineLoop(p,color,op)}
+// 30-yard circle (two semicircles r=27.43 around stumps, joined)
+{const p=[],r=27.43;for(let i=0;i<=64;i++){const a=Math.PI+i/64*Math.PI;p.push(new THREE.Vector3(Math.cos(a)*r,0.01,-10.06+Math.sin(a)*r))}for(let i=0;i<=64;i++){const a=i/64*Math.PI;p.push(new THREE.Vector3(Math.cos(a)*r,0.01,10.06+Math.sin(a)*r))}
+ var yard=lineLoop(p,0xffffff,0.45);sc.add(yard)}
+const rope=circle(68,0.03,0xffffff,0.7);sc.add(rope);
+// stands
+{const pts=[];pts.push(new THREE.Vector2(73,0));pts.push(new THREE.Vector2(76,3));pts.push(new THREE.Vector2(100,22));pts.push(new THREE.Vector2(104,32));pts.push(new THREE.Vector2(106,32));pts.push(new THREE.Vector2(106,0));
+ const st=new THREE.Mesh(new THREE.LatheGeometry(pts,128),new THREE.MeshStandardMaterial({color:0x10131c,roughness:.9,side:THREE.DoubleSide}));sc.add(st);
+ // crowd lights
+ const N=9000,pos=new Float32Array(N*3),col=new Float32Array(N*3);
+ for(let i=0;i<N;i++){const a=rnd()*Math.PI*2,k=rnd();const r=76+k*24,y=3+k*19+0.4;pos.set([Math.cos(a)*r,y,Math.sin(a)*r],i*3);const c=rnd();const cc=c<.5?[.55,.65,1]:c<.8?[1,.85,.6]:[1,.45,.2];col.set(cc,i*3)}
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));g.setAttribute('color',new THREE.BufferAttribute(col,3));
+ sc.add(new THREE.Points(g,new THREE.PointsMaterial({size:3,sizeAttenuation:false,vertexColors:true,map:dotTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.8})));
+ // floodlights
+ for(let i=0;i<6;i++){const a=i/6*Math.PI*2+0.3;const x=Math.cos(a)*112,z=Math.sin(a)*112;const p=new THREE.Mesh(new THREE.CylinderGeometry(0.6,1,58,8),new THREE.MeshStandardMaterial({color:0x1a1d26}));p.position.set(x,29,z);sc.add(p);const h=glow(40,0xcfe0ff,.9);h.position.set(x,60,z);sc.add(h)}
+}
+// city
+{const N=2600;const geo=new THREE.BoxGeometry(1,1,1);geo.translate(0,.5,0);const inst=new THREE.InstancedMesh(geo,new THREE.MeshStandardMaterial({color:0x0b0e16,roughness:1}),N);const m=new THREE.Matrix4();
+ const wp=[];for(let i=0;i<N;i++){let x,z,r;do{x=(rnd()*2-1)*1600;z=(rnd()*2-1)*1600;r=Math.hypot(x,z)}while(r<140);const w=8+rnd()*22,d=8+rnd()*22,h=6+rnd()*rnd()*70;m.compose(new THREE.Vector3(x,0,z),new THREE.Quaternion(),new THREE.Vector3(w,h,d));inst.setMatrixAt(i,m);for(let k=0;k<4;k++)wp.push(x+(rnd()-.5)*w,rnd()*h,z+(rnd()-.5)*d)}
+ sc.add(inst);const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(wp,3));sc.add(new THREE.Points(g,new THREE.PointsMaterial({size:2,sizeAttenuation:false,color:0xffc27a,map:dotTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.55})))}
+
+// SUN football
+const SUNP=new THREE.Vector3(0,0.11,0);
+const sunG=new THREE.Group();sunG.position.copy(SUNP);sc.add(sunG);
+const sunTex=canvasTex(512,256,(g,w,h)=>{const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#ffc24a');gr.addColorStop(.5,'#ff8a1a');gr.addColorStop(1,'#e85a00');g.fillStyle=gr;g.fillRect(0,0,w,h);for(let i=0;i<900;i++){g.fillStyle=`rgba(255,${200+rnd()*55|0},120,${rnd()*.35})`;g.beginPath();g.arc(rnd()*w,rnd()*h,1+rnd()*5,0,7);g.fill()}});
+sunG.add(new THREE.Mesh(new THREE.SphereGeometry(0.11,64,48),new THREE.MeshBasicMaterial({map:sunTex,toneMapped:false})));
+{const e=new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.1108,1));sunG.add(new THREE.LineSegments(e,new THREE.LineBasicMaterial({color:0x5a1e00,transparent:true,opacity:.9})))}
+const sg1=glow(0.7,0xffb050,.9),sg2=glow(2.2,0xff8a20,.28);sunG.add(sg1);sunG.add(sg2);
+
+// EARTH 2 mm, MOON 0.55 mm @ 6.1 cm
+const EP=new THREE.Vector3(23.6,0.11,0);
+const earth=new THREE.Mesh(new THREE.SphereGeometry(0.001,64,48),new THREE.MeshStandardMaterial({map:earthTex,roughness:.8,emissiveMap:earthTex,emissive:0xffffff,emissiveIntensity:.45}));earth.position.copy(EP);earth.rotation.y=2.2;sc.add(earth);
+const eAtm=glow(0.006,0x6fa8ff,.6);eAtm.position.copy(EP);sc.add(eAtm);
+const MP=EP.clone().add(new THREE.Vector3(0,0,0.061));
+const moon=new THREE.Mesh(new THREE.SphereGeometry(0.000275,32,24),new THREE.MeshStandardMaterial({map:moonTex,roughness:1,emissiveMap:moonTex,emissive:0xffffff,emissiveIntensity:.5}));moon.position.copy(MP);sc.add(moon);
+// ruler earth->moon
+const ruler=new THREE.Group();sc.add(ruler);
+{const m=new THREE.LineBasicMaterial({color:0xff9933,transparent:true,opacity:1});const pts=[EP.clone().add(new THREE.Vector3(0,-0.0018,0)),MP.clone().add(new THREE.Vector3(0,-0.0018,0))];ruler.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),m));
+ for(let i=0;i<=6;i++){const z=i/6*0.061;const p=[EP.clone().add(new THREE.Vector3(0,-0.0018,z)),EP.clone().add(new THREE.Vector3(0,-0.0018-(i%3==0?0.002:0.001),z))];ruler.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p),m))}}
+// measure line sun->earth
+const measG=new THREE.BufferGeometry().setFromPoints([SUNP.clone().setY(0.03),EP.clone().setY(0.03)]);
+const meas=new THREE.Mesh(new THREE.PlaneGeometry(1,0.3).translate(.5,0,0),new THREE.MeshBasicMaterial({color:0xff9933,transparent:true,depthWrite:false}));meas.rotation.x=-Math.PI/2;meas.position.set(0,0.035,0);sc.add(meas);
+const measHead=glow(1.2,0xff9933,1);sc.add(measHead);
+// orbits
+function band(r,w,y){const m=new THREE.Mesh(new THREE.RingGeometry(r-w/2,r+w/2,256),new THREE.MeshBasicMaterial({color:0xff9933,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false}));m.rotation.x=-Math.PI/2;m.position.y=y;return m}
+const orbE=band(23.6,0.22,0.03),orbJ=band(123,1.6,0.1),orbN=band(711,9,0.3);sc.add(orbE,orbJ,orbN);
+// JUPITER 2.26 cm @123 m, NEPTUNE 0.78 cm @711 m
+const JP=new THREE.Vector3(-87,0.11,-87);
+const jupTex=canvasTex(512,256,(g,w,h)=>{const cs=['#d8c29a','#b98a5e','#e8dcc0','#a8744c','#d9b98c','#c49a6c','#efe4cc','#b07a50'];let y=0;while(y<h){const bh=6+rnd()*22;g.fillStyle=cs[(rnd()*cs.length)|0];g.fillRect(0,y,w,bh);y+=bh}g.fillStyle='#b5522f';g.beginPath();g.ellipse(330,170,34,16,0,0,7);g.fill()});
+const jup=new THREE.Mesh(new THREE.SphereGeometry(0.0113,48,32),new THREE.MeshStandardMaterial({map:jupTex}));jup.position.copy(JP);sc.add(jup);
+const NP=new THREE.Vector3(500,0.11,-505.5);
+const nep=new THREE.Mesh(new THREE.SphereGeometry(0.0039,32,24),new THREE.MeshStandardMaterial({color:0x4a7bff}));nep.position.copy(NP);sc.add(nep);
+const markJ=glow(14,0xff9933,0),markN=glow(60,0xff9933,0);markJ.position.copy(JP);markN.position.copy(NP);sc.add(markJ,markN);
+
+// ================= GLOBE SCENE (radius 1 = 6371 km)
+const sc2=new THREE.Scene();sc2.background=new THREE.Color(0x000000);
+const cam2=new THREE.PerspectiveCamera(40,W/H,0.001,100);
+sc2.add(new THREE.AmbientLight(0x404a66,1.2));const gl=new THREE.DirectionalLight(0xffffff,2.2);gl.position.set(-3,2,4);sc2.add(gl);
+const globe=new THREE.Mesh(new THREE.SphereGeometry(1,128,96),new THREE.MeshStandardMaterial({map:earthTex,emissiveMap:lightsTex,emissive:0xffb060,emissiveIntensity:1.1,roughness:.9,transparent:true}));sc2.add(globe);
+const atm=glow(3.0,0x5f9bff,.35);sc2.add(atm);
+// stars field
+{const N=3000,p=[];for(let i=0;i<N;i++){const v=new THREE.Vector3(rnd()*2-1,rnd()*2-1,rnd()*2-1).normalize().multiplyScalar(40+rnd()*20);p.push(v.x,v.y,v.z)}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));var starsM=new THREE.PointsMaterial({size:2,sizeAttenuation:false,color:0xffffff,map:dotTex,transparent:true,opacity:.7,depthWrite:false});sc2.add(new THREE.Points(g,starsM))}
+function ll(lat,lon,r=1){const la=lat*Math.PI/180,lo=lon*Math.PI/180;return new THREE.Vector3(r*Math.cos(la)*Math.cos(lo),r*Math.sin(la),-r*Math.cos(la)*Math.sin(lo))}
+// texture u maps lon -180..180 -> three sphere default: x=-cos(phi)... align by rotating globe
+// three SphereGeometry: u=0 at -x?  vertex = (-cos(u2pi) sin(v pi), cos(v pi), sin(u2pi) sin(v pi)); lon=-180 at u=0 => point(-1,..,0)*... ; our ll(lat,-180)=(-cos la,.., 0) matches with -sin => consistent with z sign below
+function llTex(lat,lon,r=1){const u=(lon+180)/360,v=(90-lat)/180;const ph=u*Math.PI*2,th=v*Math.PI;return new THREE.Vector3(-r*Math.cos(ph)*Math.sin(th),r*Math.cos(th),r*Math.sin(ph)*Math.sin(th))}
+const MUM=[19.076,72.877];
+// destination 6354 km from Mumbai, bearing 312 deg
+function dest(lat,lon,brg,dkm){const R=6371,d=dkm/R,la=lat*Math.PI/180,lo=lon*Math.PI/180,b=brg*Math.PI/180;const la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(b));const lo2=lo+Math.atan2(Math.sin(b)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2));return [la2*180/Math.PI,lo2*180/Math.PI]}
+const DST=dest(MUM[0],MUM[1],312,6354);
+const pM=llTex(...MUM,1.002),pD=llTex(...DST,1.002);
+const ballM=glow(0.09,0xffa040,1),ballD=glow(0.09,0xffa040,1);ballM.position.copy(pM);ballD.position.copy(pD);sc2.add(ballM,ballD);
+const ballM2=glow(0.025,0xfff0d0,1),ballD2=glow(0.025,0xfff0d0,1);ballM2.position.copy(pM);ballD2.position.copy(pD);sc2.add(ballM2,ballD2);
+// arc
+const ARCN=200,arcPts=[];for(let i=0;i<=ARCN;i++){const k=i/ARCN;const v=new THREE.Vector3().copy(pM).normalize().lerp(pD.clone().normalize(),k).normalize();v.multiplyScalar(1.003+Math.sin(k*Math.PI)*0.12);arcPts.push(v)}
+const arcG=new THREE.BufferGeometry().setFromPoints(arcPts);const arc=new THREE.Line(arcG,new THREE.LineBasicMaterial({color:0xff9933,transparent:true}));sc2.add(arc);
+
+// ================= camera keys (orbit param)
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+const Em=EP.clone().add(V(0,0,0.03));
+const K=[
+ {t:0,tg:SUNP,d:1.5,az:28,el:9},
+ {t:S.sun-.3,tg:SUNP,d:1.25,az:48,el:11},
+ {t:S.sun+1.4,tg:V(0,.5,0),d:15,az:72,el:26},
+ {t:S.earth+.1,tg:V(4,.3,0),d:17,az:86,el:30},
+ {t:S.earth+1.3,tg:EP,d:.016,az:110,el:16},
+ {t:S.dist-.1,tg:EP,d:.013,az:135,el:18},
+ {t:S.dist+1.4,tg:V(11.8,0,0),d:95,az:90,el:62},
+ {t:S.moon-.2,tg:V(11.8,0,0),d:105,az:70,el:66},
+ {t:S.moon+1.0,tg:Em.clone().add(V(0,0,.02)),d:.12,az:95,el:20},
+ {t:S.jup-.1,tg:Em.clone().add(V(0,0,.022)),d:.112,az:100,el:22},
+ {t:S.jup+1.6,tg:V(-35,0,-35),d:330,az:30,el:46},
+ {t:S.nep-.1,tg:V(-35,0,-35),d:360,az:22,el:50},
+ {t:S.nep+1.2,tg:V(150,0,-150),d:2300,az:10,el:66},
+ {t:S.star+1.2,tg:V(150,0,-150),d:6000,az:4,el:80},
+];
+function camAt(t){
+ if(t>=S.loop+.35){const k=K[0];return pose(k.tg,lerp(2.1,1.5,ramp(t,S.loop+.35,END)),lerp(10,28,ramp(t,S.loop+.35,END)),9,40)}
+ let i=0;while(i<K.length-1&&t>K[i+1].t)i++;
+ const a=K[i],b=K[Math.min(i+1,K.length-1)];const k=b===a?0:ease((t-a.t)/(b.t-a.t));
+ const tg=a.tg.clone().lerp(b.tg,k);const d=Math.exp(lerp(Math.log(a.d),Math.log(b.d),k));
+ return pose(tg,d,lerp(a.az,b.az,k),lerp(a.el,b.el,k),40);
+}
+function pose(tg,d,az,el,fov){const A=az*Math.PI/180,E=el*Math.PI/180;cam.position.set(tg.x+d*Math.cos(E)*Math.cos(A),tg.y+d*Math.sin(E),tg.z+d*Math.cos(E)*Math.sin(A));cam.near=Math.max(d*0.002,0.00002);cam.far=Math.max(d*40,5000);cam.fov=fov;cam.updateProjectionMatrix();cam.lookAt(tg)}
+
+// ================= UI helpers
+function proj(v,c){const p=v.clone().project(c);return {x:(p.x+1)/2*W,y:(1-p.y)/2*H,z:p.z}}
+function setHud(id,world,c,text,alpha,side){const el=$(id);if(alpha<=0.01){el.style.opacity=0;return}const p=proj(world,c);let x=clamp(p.x,140,520),y=clamp(p.y,680,1050);el.style.left=x+'px';el.style.top=y+'px';el.style.opacity=alpha;el.className='hud';el.querySelector('span').innerHTML=text;const s=1+0.25*(1-clamp(alpha*1.5));el.style.transform=`scale(${s})`}
+function big(label,num,sub,alpha){const b=$('big');b.style.opacity=alpha;$('bigLabel').textContent=label;$('bigNum').innerHTML=num;$('bigSub').textContent=sub;b.style.transform=`translateY(${(1-alpha)*30}px)`}
+// caption chunks
+const CH=[];
+for(const l of TL.lines){const words=l.cap.split(' ');const lines=[];let cur='';for(const w of words){if((cur+' '+w).trim().length>22){lines.push(cur.trim());cur=w}else cur+=' '+w}if(cur.trim())lines.push(cur.trim());
+ const chunks=[];for(let i=0;i<lines.length;i+=2)chunks.push(lines.slice(i,i+2));const tot=chunks.reduce((s,c)=>s+c.join('').length,0);let t0=l.start;
+ for(const c of chunks){const dt=l.dur*c.join('').length/tot;CH.push({a:t0,b:t0+dt,html:c.join('<br>')});t0+=dt}}
+const fmt=(x,dp=1)=>x.toFixed(dp);
+
+window.seek=function(t){
+ // ---- stadium
+ const r=camAt(t);
+ sunG.rotation.y=t*0.25;
+ earth.rotation.y=2.2+t*0.3; moon.rotation.y=t*0.2; jup.rotation.y=t*0.5;
+ const sp=1+0.04*Math.sin(t*3);sg1.scale.set(.75*sp,.75*sp,1);
+ // measure line
+ const mk=ramp(t,S.dist+0.2,S.dist+3.2), mvis=win(t,S.dist,S.moon+.4,.4);
+ const head=SUNP.clone().setY(0.03).lerp(EP.clone().setY(0.03),mk);meas.scale.x=Math.max(0.001,23.6*mk);meas.material.opacity=mvis;measHead.position.copy(head);measHead.material.opacity=mvis;
+ orbE.material.opacity=0.9*(win(t,S.dist+2.6,S.moon+.3,.4)+win(t,S.jup+.8,S.nep+1,.5));
+ yard.material.opacity=0.45+0.5*win(t,S.dist+2.6,S.dist+4.8,.4)*(0.5+0.5*Math.sin(t*10));
+ ruler.children.forEach(c=>c.material.opacity=win(t,S.moon+.6,S.jup+.2));
+ orbJ.material.opacity=0.9*win(t,S.jup+1.2,S.star+1,.6);markJ.material.opacity=0.8*win(t,S.jup+1.2,S.nep+.6,.4);
+ orbN.material.opacity=0.9*win(t,S.nep+.6,S.star+1.4,.5);markN.material.opacity=0.8*win(t,S.nep+.8,S.star+1,.4);
+ R1.render(sc,cam);
+ // ---- globe
+ const gA=ramp(t,S.star+0.6,S.star+1.6)*(1-ramp(t,S.loop+.1,S.loop+.35));
+ $('c2').style.opacity=gA;
+ if(gA>0){
+  const nM=pM.clone().normalize(),mid=pM.clone().add(pD).normalize();
+  const k1=ramp(t,S.star+0.3,S.star+3.6),k2=ramp(t,S.dark-.2,S.cta+3);
+  const dir=nM.clone().lerp(mid,k1).normalize();const dist=Math.exp(lerp(Math.log(1.7),Math.log(4.0),k1))*lerp(1,1.9,k2);
+  cam2.position.copy(dir.multiplyScalar(dist));cam2.up.set(0,1,0);const midS=pM.clone().add(pD).multiplyScalar(.5);cam2.lookAt(pM.clone().lerp(midS.multiplyScalar(.9),k1).add(V(0,-0.32*k1,0)));
+  const ak=ramp(t,S.star+2.0,S.star+4.6);arcG.setDrawRange(0,Math.max(2,Math.floor(ak*ARCN)));arc.material.opacity=ak>0?1:0;
+  ballD.material.opacity=ballD2.material.opacity=ramp(t,S.star+4.4,S.star+4.9);
+  const dim=1-0.88*ramp(t,S.dark,S.dark+1.2);globe.material.opacity=dim;globe.material.emissiveIntensity=1.1*dim;atm.material.opacity=.35*dim;
+  arc.material.opacity*=lerp(1,.25,ramp(t,S.dark,S.dark+1.2));
+  R2.render(sc2,cam2);
+ }
+ // ---- UI
+ $('tag').style.opacity=1;
+ // big text
+ let B=null;
+ const segs=[
+  [S.hook+.05,S.sun-.1,'AGAR SOORAJ','football<small>hota…</small>','toh Dharti kahan hoti?'],
+  [S.sun+1.0,S.earth-.05,'SOORAJ','22<small>cm</small>','ek football'],
+  [S.earth+1.3,S.dist,'DHARTI','2<small>mm</small>','raai ka daana'],
+  [S.dist+.3,S.moon,'DOORI','D','30-yard circle ke andar'],
+  [S.moon+1.0,S.jup,'CHAAND','0.5<small>mm</small>',''],
+  [S.jup+1.4,S.nep,'JUPITER','123<small>m</small>','ek kancha · 2.3 cm'],
+  [S.nep+.8,S.star+.3,'NEPTUNE','711<small>m</small>','stadium se bahut door'],
+  [S.star+2.4,S.dark,'AGLA TAARA','K','ek aur football'],
+  [S.dark+.2,S.cta-.05,'BEECH MEIN','0','kuch nahi. bas andhera.'],
+ ];
+ for(const s of segs){if(t>=s[0]&&t<s[1]){B=s;break}}
+ if(B){let num=B[3];const a=win(t,B[0],B[1],.3);
+  if(num==='D'){num=fmt(23.6*ramp(t,S.dist+0.2,S.dist+3.2))+'<small>m</small>'}
+  if(num==='K'){num=Math.round(6354*ramp(t,S.star+2.4,S.star+4.6)).toLocaleString('en-IN')+'<small>km</small>'}
+  big(B[2],num,B[4],a);
+ } else $('big').style.opacity=0;
+ // HUD
+ if(t<S.moon){const hA=win(t,S.sun+1.2,S.earth+.6,.3);setHud('hudA',SUNP,cam,'SOORAJ · 22 cm',hA,'right')}else setHud('hudA',EP,cam,'DHARTI',win(t,S.moon+1.0,S.jup+.2,.25),'right');
+ let hb=0,hbT='',hbP=EP,side='right';
+ if(t>S.earth+1.1&&t<S.dist+.3){hb=win(t,S.earth+1.1,S.dist+.3,.25);hbT='DHARTI · 2 mm';hbP=EP}
+ else if(t>S.dist+1.2&&t<S.moon+.2){hb=win(t,S.dist+1.2,S.moon+.2,.25);hbT='DHARTI';hbP=EP}
+ else if(t>S.moon+1.0&&t<S.jup+.2){hb=win(t,S.moon+1.0,S.jup+.2,.25);hbT='CHAAND · 0.5 mm';hbP=MP;side='left'}
+ else if(t>S.jup+1.6&&t<S.nep+.2){hb=win(t,S.jup+1.6,S.nep+.2,.25);hbT='JUPITER';hbP=JP}
+ else if(t>S.nep+1.0&&t<S.star+.6){hb=win(t,S.nep+1.0,S.star+.6,.25);hbT='NEPTUNE';hbP=NP;side='left'}
+ else if(t>S.star+4.5&&t<S.dark+.4){hb=win(t,S.star+4.5,S.dark+.4,.25);hbT='AGLA TAARA';hbP=pD;side='right'}
+ setHud('hudB',hbP,hbP===pD?cam2:cam,hbT,hb,side);
+ if(t<S.earth+.6&&t>S.dist-1){}
+ // chip (mid nudge ~40%)
+ const ca=win(t,S.moon+.15,S.moon+1.75,.25);$('chip').style.opacity=ca;$('chip').style.transform=`translateX(-50%) scale(${0.85+0.15*ramp(t,S.moon+.15,S.moon+.45)+0.03*Math.sin(t*14)})`;
+ // cta
+ const cA=win(t,S.cta-.1,S.loop+.15,.3);const cta=$('cta');cta.style.opacity=cA;cta.style.transform=`scale(${0.9+0.1*ramp(t,S.cta-.1,S.cta+.3)})`;
+ const pk=((t-S.cta)%1.6)/1.6;$('plane').style.transform=`translate(${Math.sin(pk*Math.PI*2)*14}px,${-Math.abs(Math.sin(pk*Math.PI*2))*10}px) rotate(${Math.sin(pk*Math.PI*2)*6}deg)`;
+ // captions
+ const c=CH.find(c=>t>=c.a&&t<c.b+0.12);const ci=$('capIn');if(c){ci.parentNode.style.opacity=1;ci.innerHTML=c.html}else ci.parentNode.style.opacity=0;
+ // black dip for loop
+ $('black').style.opacity=win(t,S.loop+.05,S.loop+.65,.3)*1 + (t<0.12?1-t/0.12:0)*0;
+ return true;
+};
+window.READY=true;window.pose=pose;window.cam=cam;window.proj=proj;window.EP=EP;window.MP=MP;window.Em=Em;window.V=V;window.DBG=()=>({cam:cam.position.toArray(),near:cam.near,e:proj(EP,cam),m:proj(MP,cam)});
+window.seek(0);
+</script></body></html>

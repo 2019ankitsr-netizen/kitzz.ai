@@ -1,0 +1,95 @@
+{
+ "lines": [
+  {
+   "id": "hook",
+   "tts": "एक बार, देवताओं और असुरों ने मिलकर... पूरा समुद्र मथ डाला।",
+   "cap": "Ek baar Devon aur Asuron ne milkar… poora samudra math daala.",
+   "dur": 4.72,
+   "start": 0.15
+  },
+  {
+   "id": "ocean",
+   "tts": "क्षीर सागर, दूध का सागर। और मथनी बना... मंदार पर्वत।",
+   "cap": "Ksheer Sagar — doodh ka sagar. Mathni bana Mandar parvat.",
+   "dur": 4.32,
+   "start": 5.22
+  },
+  {
+   "id": "vasuki",
+   "tts": "रस्सी बने, नागराज वासुकि।",
+   "cap": "Rassi bane Naagraj Vasuki.",
+   "dur": 2.52,
+   "start": 9.89
+  },
+  {
+   "id": "kurma",
+   "tts": "पर्वत डूबने लगा... तो विष्णु ने कूर्म अवतार लिया, और उसे अपनी पीठ पर थाम लिया।",
+   "cap": "Parvat doobne laga… Vishnu ne Kurma avatar liya, aur use peeth par thaam liya.",
+   "dur": 5.58,
+   "start": 12.76
+  },
+  {
+   "id": "poison",
+   "tts": "पर सबसे पहले निकला... हलाहल। ऐसा विष, जो पूरी सृष्टि मिटा दे।",
+   "cap": "Par sabse pehle nikla… Halahal. Aisa vish jo poori srishti mita de.",
+   "dur": 5.07,
+   "start": 18.94
+  },
+  {
+   "id": "shiva",
+   "tts": "तब महादेव ने वो विष पी लिया। गला नीला पड़ गया... और वो कहलाए, नीलकंठ।",
+   "cap": "Tab Mahadev ne vish pee liya. Gala neela pada… Neelkanth.",
+   "dur": 5.29,
+   "start": 24.51
+  },
+  {
+   "id": "ratna",
+   "tts": "फिर निकले रत्न। कामधेनु, ऐरावत, चंद्रमा, पारिजात...",
+   "cap": "Phir nikle ratna: Kamdhenu, Airavat, Chandrama, Parijaat…",
+   "dur": 4.2,
+   "start": 30.3
+  },
+  {
+   "id": "amrit",
+   "tts": "और आख़िर में, धन्वंतरि... हाथ में अमृत कलश लिए।",
+   "cap": "Aur aakhir mein Dhanvantari… haath mein Amrit kalash liye.",
+   "dur": 3.85,
+   "start": 35.0
+  },
+  {
+   "id": "lesson",
+   "tts": "याद रखना... अमृत से पहले, अक्सर विष आता है।",
+   "cap": "Yaad rakhna… Amrit se pehle, aksar vish aata hai.",
+   "dur": 3.64,
+   "start": 39.65
+  },
+  {
+   "id": "cta",
+   "tts": "जो अभी अपने विष वाले दौर में है, उसे ये भेज दो।",
+   "cap": "Jo abhi apne 'vish' wale daur mein hai, use bhej do.",
+   "dur": 3.82,
+   "start": 43.89
+  },
+  {
+   "id": "loop",
+   "tts": "क्योंकि एक बार...",
+   "cap": "Kyunki ek baar…",
+   "dur": 1.48,
+   "start": 48.01
+  }
+ ],
+ "S": {
+  "hook": 0.15,
+  "ocean": 5.22,
+  "vasuki": 9.89,
+  "kurma": 12.76,
+  "poison": 18.94,
+  "shiva": 24.51,
+  "ratna": 30.3,
+  "amrit": 35.0,
+  "lesson": 39.65,
+  "cta": 43.89,
+  "loop": 48.01
+ },
+ "end": 49.89
+}

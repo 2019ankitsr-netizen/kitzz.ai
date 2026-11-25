@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:IB;src:url(fonts/Inter-Black.otf)}
+@font-face{font-family:IX;src:url(fonts/Inter-ExtraBold.otf)}
+@font-face{font-family:IS;src:url(fonts/Inter-SemiBold.otf)}
+html,body{margin:0;width:1080px;height:1920px;background:#0b0b0e;overflow:hidden}
+canvas{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.abs{position:absolute}
+#tag{left:65px;top:285px;font:40px IX;color:#0b0b0e;background:#f5f1e8;padding:8px 18px;border-radius:10px}
+#step{left:65px;top:370px;font:44px IS;color:#8d8d98;letter-spacing:4px}
+#title{left:65px;top:430px;width:950px;font:118px/1.0 IB;color:#f5f1e8;letter-spacing:-3px}
+#sub{left:65px;top:560px;width:950px;font:52px IX;color:#c9a76a}
+#cap{left:120px;width:800px;top:1060px;height:170px;display:flex;align-items:center;justify-content:center}
+#capIn{background:rgba(245,241,232,.95);border-radius:26px;padding:16px 30px;font:52px/1.18 IX;color:#0b0b0e;text-align:center;max-width:740px}
+#chip{left:540px;top:1150px;transform:translateX(-50%);background:#c9a76a;color:#0b0b0e;font:48px IX;padding:18px 34px;border-radius:60px;white-space:nowrap}
+#dots{left:65px;top:1250px}
+</style></head><body>
+<canvas id="c1"></canvas>
+<div id="tag" class="abs">EK SHAPE, EK KAHANI · 01</div>
+<div id="step" class="abs"></div>
+<div id="title" class="abs"></div>
+<div id="sub" class="abs"></div>
+<div id="chip" class="abs">Send karo apne AI-wale dost ko ↗</div>
+<div id="cap" class="abs"><div id="capIn"></div></div>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {W,H,$,clamp,ease,ramp,win,lerp,rnd,mkR,orbitPose} from './common.js';
+const R=mkR('c1');R.toneMapping=THREE.NoToneMapping;
+const sc=new THREE.Scene();sc.background=new THREE.Color(0x0b0b0e);
+const cam=new THREE.PerspectiveCamera(36,W/H,0.1,100);
+const N=46000;const pos=new Float32Array(N*3),col=new Float32Array(N*3),siz=new Float32Array(N);
+const P=[];for(let i=0;i<N;i++)P.push([rnd(),rnd(),rnd(),rnd(),rnd()]);
+const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(pos,3));geo.setAttribute('color',new THREE.BufferAttribute(col,3));geo.setAttribute('size',new THREE.BufferAttribute(siz,1));
+const mat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true,
+ vertexShader:`attribute float size;varying vec3 vC;void main(){vC=color;vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=size*(900./-mv.z);gl_Position=projectionMatrix*mv;}`,
+ fragmentShader:`varying vec3 vC;void main(){vec2 p=gl_PointCoord-.5;float d=length(p);if(d>.5)discard;float a=smoothstep(.5,.1,d);gl_FragColor=vec4(vC*a,a);}`});
+const pts=new THREE.Points(geo,mat);pts.frustumCulled=false;sc.add(pts);
+const C=h=>{const c=new THREE.Color(h);return [c.r,c.g,c.b]};
+const hsl=(h,s,l)=>{const c=new THREE.Color().setHSL(h,s,l);return [c.r,c.g,c.b]};
+// AI text sampling
+const txt=(()=>{const c=document.createElement('canvas');c.width=600;c.height=300;const g=c.getContext('2d');g.fillStyle='#fff';g.font='900 280px IB';g.textAlign='center';g.textBaseline='middle';g.fillText('AI',300,160);const d=g.getImageData(0,0,600,300).data;const pts=[];for(let y=0;y<300;y+=2)for(let x=0;x<600;x+=2)if(d[(y*600+x)*4+3]>128)pts.push([x,y]);return pts})();
+await document.fonts.load('900 280px IB');
+const txt2=(()=>{const c=document.createElement('canvas');c.width=600;c.height=300;const g=c.getContext('2d');g.fillStyle='#fff';g.font='280px IB';g.textAlign='center';g.textBaseline='middle';g.fillText('AI',300,160);const d=g.getImageData(0,0,600,300).data;const pts=[];for(let y=0;y<300;y+=2)for(let x=0;x<600;x+=2)if(d[(y*600+x)*4+3]>128)pts.push([x,y]);return pts})();
+const AIP=txt2.length>100?txt2:txt;
+// shape functions -> [x,y,z,color,size]
+const SH=[
+ // 0 sand pile
+ p=>{const r=2.0*Math.sqrt(p[0]);const a=p[1]*6.283;const hmax=1.7*(1-r/2.0);const y=-1.3+hmax*Math.pow(p[2],0.35);const c=mix(C('#e8c98e'),C('#b8894c'),p[3]);return [Math.cos(a)*r,y,Math.sin(a)*r,mul(c,0.55),0.035]},
+ // 1 ingot (vertical cylinder)
+ p=>{let x,y,z;const a=p[1]*6.283;if(p[0]<0.85){y=-1.6+p[2]*3.2;x=Math.cos(a)*0.85;z=Math.sin(a)*0.85}else{const r=0.85*Math.sqrt(p[2]);y=p[0]<0.925?1.6:-1.6;x=Math.cos(a)*r;z=Math.sin(a)*r}
+  const sh=0.5+0.5*Math.cos(a-0.8);const c=mix(C('#5d6b80'),C('#e8f0ff'),Math.pow(sh,3));return [x,y,z,mul(c,0.55),0.03]},
+ // 2 wafer (disk, tilted), iridescent, die grid
+ p=>{const r=1.75*Math.sqrt(p[0]);const a=p[1]*6.283;let x=Math.cos(a)*r,z=Math.sin(a)*r,y=(p[2]-.5)*0.04;
+  const gx=Math.abs(((x+10)%0.32)-0.16),gz=Math.abs(((z+10)%0.32)-0.16);const line=(gx>0.145||gz>0.145)?1:0;
+  const c=hsl((0.55+0.25*Math.sin(x*1.3+z*0.9))%1,0.8,0.55);const cc=line?mul(C('#ffffff'),0.6):mul(c,0.5);
+  const tl=-1.05;const yy=y*Math.cos(tl)-z*Math.sin(tl),zz=y*Math.sin(tl)+z*Math.cos(tl);return [x,yy,zz,cc,0.03]},
+ // 3 chip with pins
+ p=>{let x,y,z,c;if(p[0]<0.55){x=(p[1]-.5)*2.0;z=(p[2]-.5)*2.0;y=(p[3]-.5)*0.18;const core=Math.abs(x)<0.55&&Math.abs(z)<0.55;c=core?mul(C('#ffd27a'),0.6):mul(C('#3a4152'),0.6)}
+  else{const side=Math.floor(p[1]*4),k=Math.floor(p[2]*12),pin=(k+0.5)/12*1.8-0.9;const w=(p[3]-.5)*0.07,l=1.0+p[4]*0.35;const pts=[[pin+w,l],[pin+w,-l],[l,pin+w],[-l,pin+w]][side];x=pts[0];z=pts[1];y=-0.02;c=mul(C('#e7b85a'),0.7)}
+  const tl=-0.95;const yy=y*Math.cos(tl)-z*Math.sin(tl),zz=y*Math.sin(tl)+z*Math.cos(tl);return [x,yy,zz,c,0.03]},
+ // 4 phone
+ p=>{const w=1.6,h=3.2,rr=0.3;let x,y,z=0,c;if(p[0]<0.45){const per=p[1];// outline
+   const L=2*(w+h);let d=per*L;if(d<w){x=-w/2+d;y=h/2}else if(d<w+h){x=w/2;y=h/2-(d-w)}else if(d<2*w+h){x=w/2-(d-w-h);y=-h/2}else{x=-w/2;y=-h/2+(d-2*w-h)}
+   x*=1+(p[2]-.5)*0.02;y*=1+(p[2]-.5)*0.01;z=(p[3]-.5)*0.12;c=mul(C('#dcdce6'),0.6)}
+  else{x=(p[1]-.5)*(w-0.2);y=(p[2]-.5)*(h-0.25);z=0.02;const glowc=hsl(0.62+0.12*p[2],0.8,0.5);const bubble=(Math.abs(y-0.5)<0.18&&x>-0.5)||(Math.abs(y+0.1)<0.18&&x<0.4);c=bubble?mul(C('#ffffff'),0.5):mul(glowc,0.2)}
+  return [x,y,z,c,0.03]},
+ // 5 AI text
+ p=>{const q=AIP[Math.floor(p[0]*AIP.length)];const x=(q[0]-300)/600*3.6+(p[1]-.5)*0.012,y=-(q[1]-160)/600*3.6;const z=(p[2]-.5)*0.25;const c=hsl(0.75-0.25*(x+1.8)/3.6,0.85,0.58);return [x,y,z,mul(c,0.55),0.032]},
+];
+function mix(a,b,k){return [lerp(a[0],b[0],k),lerp(a[1],b[1],k),lerp(a[2],b[2],k)]}
+function mul(a,k){return [a[0]*k,a[1]*k,a[2]*k]}
+const LAB=[
+ ['01 / 06','Ret','silica sand — sab yahin se shuru'],
+ ['02 / 06','Silicon','pighlao, shuddh karo → ingot'],
+ ['03 / 06','Wafer','ingot ki patli slice'],
+ ['04 / 06','Chip','ek wafer = sainkdon chips'],
+ ['05 / 06','Phone','andar arabon transistors'],
+ ['06 / 06','AI','…aur ret ab baat karti hai'],
+];
+const SEG=2.5,HOLD=1.05,LOOP=SEG*6;window.END=LOOP;
+// precompute shape targets
+const TG=SH.map(f=>P.map(p=>f(p)));
+window.seek=function(t){
+ t=((t%LOOP)+LOOP)%LOOP;
+ const si=Math.floor(t/SEG),u=t-si*SEG;const a=si,b=(si+1)%6;
+ for(let i=0;i<N;i++){const A=TG[a][i],B=TG[b][i];const p=P[i];
+  // sweep delay by height
+  const dl=0.55*clamp((A[1]+1.8)/3.6)+0.15*p[4];const k=ramp(u,HOLD+dl*0.6,HOLD+dl*0.6+0.75);
+  const sw=Math.sin(k*Math.PI);const nx=Math.sin(p[1]*40+t*2)*0.35*sw,ny=Math.cos(p[2]*40+t*2)*0.35*sw+0.25*sw,nz=Math.sin(p[3]*40)*0.35*sw;
+  pos[i*3]=lerp(A[0],B[0],k)+nx;pos[i*3+1]=lerp(A[1],B[1],k)+ny;pos[i*3+2]=lerp(A[2],B[2],k)+nz;
+  const c=mix(A[3],B[3],k);const fl=1.7*(1+0.6*sw);col[i*3]=c[0]*fl;col[i*3+1]=c[1]*fl;col[i*3+2]=c[2]*fl;siz[i]=1.6*lerp(A[4],B[4],k)}
+ geo.attributes.position.needsUpdate=geo.attributes.color.needsUpdate=geo.attributes.size.needsUpdate=true;
+ const az=90+18*Math.sin(t/LOOP*6.283),el=10+6*Math.sin(t/LOOP*12.566);
+ orbitPose(cam,new THREE.Vector3(0,-0.3,0),17.5,az,el,36);
+ R.render(sc,cam);
+ // UI: label switches at mid-morph
+ const li=(u>HOLD+0.6)?b:a;const L=LAB[li];
+ const fade=Math.min(1,Math.abs(u-(HOLD+0.6))/0.18);
+ $('step').textContent=L[0];$('title').textContent=L[1];$('sub').textContent=L[2];
+ for(const id of ['title','sub','step'])$(id).style.opacity=fade;
+ $('capIn').textContent=L[1]+' → '+(L[2].length>24?L[2].slice(0,L[2].indexOf(' ',18)>0?L[2].indexOf(' ',18):24):L[2]);
+ $('capIn').innerHTML=L[2];
+ $('cap').style.opacity=0;
+ const ch=si===5?win(u,0.2,SEG,.25):(si===2?win(u,0.1,1.6,.25):0);$('chip').style.opacity=ch;
+ $('chip').textContent=si===2?'Save karo · loop dekhte raho':'Send karo apne AI-wale dost ko ↗';
+ return true};
+window.READY=true;window.seek(0);
+</script></body></html>
